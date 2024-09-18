@@ -1,0 +1,42 @@
+#player_life_bar {
+    position: relative;
+    max-width: 100px;
+    margin-bottom: 10px;
+}
+
+#life_bar_bg {
+    position: absolute;
+    border: 1px solid black;
+    border-radius: 6px;
+    height: 10px;
+    width: 100px;
+}
+
+#pcurrent_life_bar {
+    position: absolute;
+    border: 1px solid black;
+    border-right: 0px;
+    border-radius: 6px;
+    background-color: #00FF00;
+    height: 10px;
+    width: 100px;
+    transition: width 0.3s ease;
+}
+
+#monster_life_bar{
+    margin-top: 20px;
+    position: relative;
+    max-width: 100px;
+    margin-bottom: 10px;
+}
+
+#mcurrent_life_bar {
+    position: absolute;
+    border: 1px solid black;
+    border-right: 0px;
+    border-radius: 6px;
+    background-color: #00FF00;
+    height: 10px;
+    width: 100px;
+    transition: width 0.3s ease;
+}
