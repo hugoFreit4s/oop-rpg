@@ -13,6 +13,9 @@ export default class Player extends Entity {
         console.log('atk player');
     }
     setExp(value) {
+        this.exp = value;
+    }
+    increaseExp(value) {
         this.exp += value;
     }
     getExp() {

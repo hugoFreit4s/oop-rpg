@@ -1,10 +1,15 @@
+main {
+    display: flex;
+    flex-direction: column;
+}
+
 .life_bar {
     position: relative;
     max-width: 100px;
     margin-bottom: 10px;
 }
 
-.monster_life_bar{
+.monster_life_bar {
     margin-top: 20px;
 }
 
@@ -36,5 +41,15 @@
     background-color: #00FF00;
     height: 10px;
     width: 100px;
+    transition: width 0.3s ease;
+}
+
+#current_level_bar{
+    position: absolute;
+    border: 1px solid black;
+    border-right: 0px;
+    border-radius: 6px;
+    background-color: #00FF00;
+    height: 10px;
     transition: width 0.3s ease;
 }

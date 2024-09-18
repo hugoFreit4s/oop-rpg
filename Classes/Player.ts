@@ -16,6 +16,10 @@ export default class Player extends Entity {
     }
 
     setExp(value: number): void {
+        this.exp = value;
+    }
+
+    increaseExp(value: number): void {
         this.exp += value;
     }
 
