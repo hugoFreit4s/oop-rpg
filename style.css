@@ -1,10 +1,14 @@
-#player_life_bar {
+.life_bar {
     position: relative;
     max-width: 100px;
     margin-bottom: 10px;
 }
 
-#life_bar_bg {
+.monster_life_bar{
+    margin-top: 20px;
+}
+
+.life_bar_bg {
     position: absolute;
     border: 1px solid black;
     border-radius: 6px;
@@ -23,12 +27,6 @@
     transition: width 0.3s ease;
 }
 
-#monster_life_bar{
-    margin-top: 20px;
-    position: relative;
-    max-width: 100px;
-    margin-bottom: 10px;
-}
 
 #mcurrent_life_bar {
     position: absolute;
