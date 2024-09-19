@@ -26,7 +26,7 @@ export default class Monster extends Entity {
     }
     dropLoot(p) {
         p.increaseExp(this.xpLoot);
-        if (p.getInventory().length < 10) {
+        if (p.getInventory().length < 11) {
             p.addToInventory(this.eqpLoot);
             console.log(`${this.name} dropped ${this.xpLoot} XP\nPlayer XP ${p.getExpAmount()}`);
         }

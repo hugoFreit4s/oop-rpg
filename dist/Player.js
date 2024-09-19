@@ -25,9 +25,6 @@ export default class Player extends Entity {
         }
     }
     levelUp() {
-        this.strength++;
-        this.def++;
-        this.level++;
         this.hp = this.maxHp;
         if (this.level < 6) {
             this.skillPoints = 3;
@@ -38,8 +35,8 @@ export default class Player extends Entity {
         else {
             this.skillPoints = 7;
         }
-        // this.setSkillPoints();
-        // console.log(`LVL UP! All stats increased 1 points!\nNew level: ${this.level}\nSkill points earned: ${this.skillPoints}`);
+        console.log(`LVL UP! New level: ${this.level}\nSkill points earned: ${this.skillPoints}`);
+        this.setSkillPoints();
     }
     setSkillPoints() {
         const rl = readline.createInterface({
