@@ -4,8 +4,8 @@ import Player from "./Player.js";
 export default class Monster extends Entity{
     race: 'Orc' | 'Troll' | 'Human';
     xpLoot: number;
-    constructor(xpLoot: number, mHp: number, hp: number, atk: number, def: number, name: string, race: 'Orc' | 'Troll' | 'Human'){
-        super(mHp, hp, atk, def, name);
+    constructor(xpLoot: number, mHp: number, hp: number, strength: number, def: number, name: string, race: 'Orc' | 'Troll' | 'Human'){
+        super(mHp, hp, strength, def, name);
         this.race = race;
         this.xpLoot = xpLoot;
     }

@@ -3,11 +3,13 @@ export default class Player extends Entity {
     expAmount;
     level;
     requiredExp;
-    constructor(mHp, hp, atk, def, name) {
-        super(mHp, hp, atk, def, name);
+    skillPoints;
+    constructor(mHp, hp, strength, def, name) {
+        super(mHp, hp, strength, def, name);
         this.expAmount = 0;
         this.level = 1;
         this.requiredExp = this.level * 30;
+        this.skillPoints = 0;
     }
     attackSound() {
         console.log('grr');
@@ -20,10 +22,19 @@ export default class Player extends Entity {
         }
     }
     levelUp() {
-        this.atk++;
+        this.strength++;
         this.def++;
         this.level++;
         this.hp = this.maxHp;
+        if (this.level < 6) {
+            this.skillPoints = 3;
+        }
+        else if (this.level < 10) {
+            this.skillPoints = 5;
+        }
+        else {
+            this.skillPoints = 7;
+        }
         console.log(`LVL UP! All stats increased 1 points!\nNew level: ${this.level}`);
     }
     getLevel() {
@@ -34,7 +45,7 @@ export default class Player extends Entity {
         if (this.hp - damage < 0) {
             console.log('Game over!');
             this.level = 1;
-            this.atk = 1;
+            this.strength = 1;
             this.def = 1;
             this.maxHp = 10;
             this.hp = 10;

@@ -2,8 +2,8 @@ import Entity from "./Entity.js";
 export default class Monster extends Entity {
     race;
     xpLoot;
-    constructor(xpLoot, mHp, hp, atk, def, name, race) {
-        super(mHp, hp, atk, def, name);
+    constructor(xpLoot, mHp, hp, strength, def, name, race) {
+        super(mHp, hp, strength, def, name);
         this.race = race;
         this.xpLoot = xpLoot;
     }
