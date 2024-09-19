@@ -1,3 +1,4 @@
+import * as readline from 'readline';
 import Entity from "./Entity.js";
 export default class Player extends Entity {
     expAmount;
@@ -8,7 +9,7 @@ export default class Player extends Entity {
         super(mHp, hp, strength, def, name);
         this.expAmount = 0;
         this.level = 1;
-        this.requiredExp = this.level * 30;
+        this.requiredExp = 1;
         this.skillPoints = 0;
     }
     attackSound() {
@@ -35,7 +36,38 @@ export default class Player extends Entity {
         else {
             this.skillPoints = 7;
         }
-        console.log(`LVL UP! All stats increased 1 points!\nNew level: ${this.level}`);
+        this.setSkillPoints();
+        // console.log(`LVL UP! All stats increased 1 points!\nNew level: ${this.level}\nSkill points earned: ${this.skillPoints}`);
+    }
+    setSkillPoints() {
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
+        const askQuestions = (question) => {
+            return new Promise((resolve) => {
+                rl.question(question, answer => resolve(answer));
+            });
+        };
+        const distribute = async () => {
+            while (this.skillPoints > 0) {
+                console.log(`\nYour stats: Strength: ${this.strength}`);
+                console.log(`Remaining skill points: ${this.skillPoints}`);
+                const choice = await askQuestions(`Where would you like to assign a point? (strength/agility/intelligence): `);
+                switch (choice.toLowerCase()) {
+                    case 'strength':
+                        this.strength++;
+                        break;
+                    default:
+                        console.log('Invalid choice. Try again.');
+                        continue;
+                }
+                this.skillPoints--;
+            }
+            rl.close();
+            console.log(`\nFinal stats: Strength: ${this.strength}`);
+        };
+        distribute();
     }
     getLevel() {
         return this.level;
