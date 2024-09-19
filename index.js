@@ -1,7 +1,7 @@
 import Monster from './dist/Monster.js';
 import Player from './dist/Player.js'
 
-const player = new Player(50, 50, 11, 1, 'Eu');
+const player = new Player(50, 50, 12, 1, 'Eu');
 //mHp, hp, atk, def, name
 
 function turno(p) {

@@ -1,13 +1,16 @@
 import * as readline from 'readline';
 import Entity from "./Entity.js";
+import Equipment from './Equipment.js';
 
 export default class Player extends Entity {
+    private inventory: Array<Equipment>;
     private expAmount: number;
     private level: number;
     private requiredExp: number;
     private skillPoints: number;
     constructor(mHp: number, hp: number, strength: number, def: number, name: string) {
         super(mHp, hp, strength, def, name);
+        this.inventory = [];
         this.expAmount = 0;
         this.level = 1;
         this.requiredExp = 1;
@@ -40,7 +43,7 @@ export default class Player extends Entity {
             this.skillPoints = 7;
         }
 
-        this.setSkillPoints();
+        // this.setSkillPoints();
 
         // console.log(`LVL UP! All stats increased 1 points!\nNew level: ${this.level}\nSkill points earned: ${this.skillPoints}`);
     }
@@ -59,14 +62,20 @@ export default class Player extends Entity {
 
         const distribute = async () => {
             while (this.skillPoints > 0) {
-                console.log(`\nYour stats: Strength: ${this.strength}`);
+                console.log(`\nYour stats: Strength: ${this.strength}, Defense: ${this.def}, Max HP: ${this.maxHp}`);
                 console.log(`Remaining skill points: ${this.skillPoints}`);
 
                 const choice = await askQuestions(`Where would you like to assign a point? (strength/agility/intelligence): `);
 
                 switch (choice.toLowerCase()) {
-                    case 'strength':
+                    case '1':
                         this.strength++;
+                        break;
+                    case '2':
+                        this.def++;
+                        break;
+                    case '3':
+                        this.maxHp++;
                         break;
                     default:
                         console.log('Invalid choice. Try again.');
@@ -76,7 +85,7 @@ export default class Player extends Entity {
                 this.skillPoints--;
             }
             rl.close();
-            console.log(`\nFinal stats: Strength: ${this.strength}`);
+            console.log(`\nFinal stats: Strength: ${this.strength}, Defense: ${this.def}, Max HP: ${this.maxHp}`);
         };
 
         distribute();
@@ -102,7 +111,17 @@ export default class Player extends Entity {
         }
     }
 
-    getExpAmount() {
+    getExpAmount(): number {
         return this.expAmount;
+    }
+
+    addToInventory(eqp: Equipment): void {
+        this.inventory.push(eqp);
+        console.log(`INVENTORY:`);
+        this.inventory.forEach(x => console.log(x));
+    }
+
+    getInventory(): Array<Equipment>{
+        return this.inventory;
     }
 }
