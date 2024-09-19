@@ -1,40 +1,51 @@
 import Entity from "./Entity.js";
 export default class Player extends Entity {
-    exp;
+    expAmount;
     level;
     requiredExp;
     constructor(mHp, hp, atk, def, name) {
         super(mHp, hp, atk, def, name);
-        this.exp = 0;
+        this.expAmount = 0;
         this.level = 1;
-        this.requiredExp = this.level * 10;
+        this.requiredExp = this.level * 30;
     }
-    emitirSomDeAtaque() {
-        console.log('atk player');
-    }
-    setExp(value) {
-        this.exp = value;
+    attackSound() {
+        console.log('grr');
     }
     increaseExp(value) {
-        this.exp += value;
+        this.expAmount += value;
+        if (this.expAmount >= this.requiredExp) {
+            this.levelUp();
+            this.expAmount -= this.requiredExp;
+        }
     }
-    getExp() {
-        return this.exp;
-    }
-    increaseLevel() {
-        this.level += 1;
-        this.maxHp += 1;
+    levelUp() {
+        this.atk++;
+        this.def++;
+        this.level++;
         this.hp = this.maxHp;
-        this.atk += 1;
-        this.def += 1;
+        console.log(`LVL UP! All stats increased 1 points!\nNew level: ${this.level}`);
     }
     getLevel() {
         return this.level;
     }
-    getRequiredExp() {
-        return this.requiredExp;
+    getDamage(atkPwr) {
+        const damage = atkPwr - this.def;
+        if (this.hp - damage < 0) {
+            console.log('Game over!');
+            this.level = 1;
+            this.atk = 1;
+            this.def = 1;
+            this.maxHp = 10;
+            this.hp = 10;
+            console.log(`Level: ${this.level}\nHP: ${this.hp} / ${this.maxHp}`);
+        }
+        else {
+            this.hp -= damage;
+            console.log(`\nOUCH!\nHP: ${this.hp} / ${this.maxHp}`);
+        }
     }
-    refreshRequiredExp() {
-        this.requiredExp = this.level * 10;
+    getExpAmount() {
+        return this.expAmount;
     }
 }

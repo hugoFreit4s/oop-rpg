@@ -12,5 +12,5 @@ export default abstract class Entity {
         this.name = name;
     }
 
-    abstract emitirSomDeAtaque(): void;
+    abstract attackSound(): void;
 }
