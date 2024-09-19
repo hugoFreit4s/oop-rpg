@@ -1,21 +1,32 @@
 import Monster from './dist/Monster.js';
-import Player from './dist/Player.js'
+import Player from './dist/Player.js';
 
-const player = new Player(50, 50, 6, 1, 'Eu');
-//mHp, hp, atk, def, name
+const player = new Player(15, 15, 5, 3, 'Eu');
+// mHp, hp, atk, def, name
 
-function turno(p) {
-    let m = new Monster(2, 10, 10, 2, 1, 'Rat', 'Human');
-    //xpLoot, mHp, hp, atk, def, name, race
-    while (p.hp > 0) {
-        p.attackSound();
-        m.getDamage(p.strength, p);
-        p.getDamage(m.strength);
-        if(m.hp <= 0) {
-            m = new Monster(2, 10, 10, 2, 1, 'Rat', 'Human');
-            console.log('Defeated!!!');
+function turn(p) {
+    let m = new Monster(2, 10, 10, 14, 3, 'Rat', 'Human');
+    // xpLoot, mHp, hp, atk, def, name, race
+
+    function executeTurn() {
+        if (p.hp > 0) {
+            m.getDamage(p.strength, p);
+            p.getDamage(m.strength);
+
+            if (m.hp <= 0) {
+                console.log(`${m.name} foi derrotado!`);
+                m = new Monster(2, 10, 10, 6, 1, 'Rat', 'Human');
+            }
+
+            console.log(`Your HP: ${p.hp} / ${p.getMaxHp()}\nENEMY HP: ${m.hp} / ${m.maxHp}`);
+
+            setTimeout(executeTurn, 2000);
+        } else {
+            console.log(`${p.name} foi derrotado!`);
         }
     }
-    console.log(m.hp)
+
+    executeTurn();
 }
-turno(player);
+
+turn(player);
