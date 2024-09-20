@@ -82,21 +82,27 @@ export default class Player extends Entity {
         return this.expAmount;
     }
 
-    addToInventory(eqp: Equipment): void {
-        this.inventory.push(eqp);
-        console.log(`INVENTORY:`);
-        this.inventory.forEach(x => console.log(x));
+    addToInventory(eqp: Array<Equipment>): void {
+        eqp.forEach(x => this.inventory.push(x));
+        // this.inventory.push(eqp);
         this.applyEquipmentBonus();
     }
 
-    applyEquipmentBonus(){
-        this.inventory.forEach(x => {
-            if(x.equipped){
-                this.def += x.def;
-                this.strength += x.atk;
-                console.log(`\n${x.name} ${x.level} EQUIPPED! NEW STATS:\nDEF: ${this.def}\nSTRENGTH: ${this.strength}\n`);
-            }
+    applyEquipmentBonus() {
+        this.inventory.forEach(x => { // Posso usar 2 argumentos em 1 forEach só?
+            this.inventory.forEach(y => {
+                if (x.category === y.category) {
+                    y.equipped = false;
+                    x.equipped = true;
+                    this.def += x.def;
+                    this.strength += x.atk;
+                    console.log(`\n${x.name} LEVEL ${x.level} EQUIPPED! NEW STATS:\nDEF: ${this.def}\nSTRENGTH: ${this.strength}`);
+                }
+            })
         });
+
+        console.log(`INVENTORY: `);
+        this.inventory.forEach(x => console.log(x));
     }
 
     getInventory(): Array<Equipment> {
@@ -138,10 +144,10 @@ export default class Player extends Entity {
 
 //     const distribute = async () => {
 //         while (this.skillPoints > 0) {
-//             console.log(`\nYour stats: Strength: ${this.strength}, Defense: ${this.def}, Max HP: ${this.maxHp}`);
-//             console.log(`Remaining skill points: ${this.skillPoints}`);
+//             console.log(`\nYour stats: Strength: ${ this.strength }, Defense: ${ this.def }, Max HP: ${ this.maxHp }`);
+//             console.log(`Remaining skill points: ${ this.skillPoints }`);
 
-//             const choice = await askQuestions(`Where would you like to assign a point? (strength/agility/intelligence): `);
+//             const choice = await askQuestions(`Where would you like to assign a point ? (strength / agility / intelligence) : `);
 
 //             switch (choice.toLowerCase()) {
 //                 case '1':
@@ -161,7 +167,7 @@ export default class Player extends Entity {
 //             this.skillPoints--;
 //         }
 //         rl.close();
-//         console.log(`\nFinal stats: Strength: ${this.strength}, Defense: ${this.def}, Max HP: ${this.maxHp}`);
+//         console.log(`\nFinal stats: Strength: ${ this.strength }, Defense: ${ this.def }, Max HP: ${ this.maxHp }`);
 //     };
 
 //     distribute();

@@ -1,7 +1,7 @@
 import Monster from './dist/Monster.js';
 import Player from './dist/Player.js';
 
-let player = new Player(15, 15, 5, 3, 'Eu');
+let player = new Player(15, 15, 10, 3, 'Eu');
 // mHp, hp, atk, def, name
 function turn(p) {
     let m = new Monster(2, 10, 10, 5, 3, 'Rat', 'Human');

@@ -1,6 +1,6 @@
-import Equipment from "./Equipment";
+import Equipment from "./Equipment.js";
 export default class Helmet extends Equipment {
-    constructor() {
-        super("Elmo", 0, 5, 0, 1, false, "Helmet");
+    constructor(name, atk, def, magic, level, equipped) {
+        super("Elmo", atk, def, magic, level, equipped, "Helmet");
     }
 }

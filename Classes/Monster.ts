@@ -1,4 +1,5 @@
 import BasicSword from "./BasicSword.js";
+import Helmet from "./Helmet.js";
 import Entity from "./Entity.js";
 import Equipment from "./Equipment.js";
 import Player from "./Player.js";
@@ -6,12 +7,12 @@ import Player from "./Player.js";
 export default class Monster extends Entity {
     race: 'Orc' | 'Troll' | 'Human';
     xpLoot: number;
-    eqpLoot: Equipment;
+    eqpLoot: Array<Equipment>;
     constructor(xpLoot: number, mHp: number, hp: number, strength: number, def: number, name: string, race: 'Orc' | 'Troll' | 'Human') {
         super(mHp, hp, strength, def, name);
         this.race = race;
         this.xpLoot = xpLoot;
-        this.eqpLoot = new BasicSword('Sword', 3, 1, 0, 1, false);
+        this.eqpLoot = [];
     }
 
     attackSound(): void {
@@ -19,7 +20,7 @@ export default class Monster extends Entity {
 
     getDamage(atkPwr: number, p: Player): void {
         let damage = atkPwr - this.def;
-        if(damage < 0) {
+        if (damage < 0) {
             damage = 0;
         }
 
@@ -34,10 +35,13 @@ export default class Monster extends Entity {
 
     dropLoot(p: Player) {
         p.increaseExp(this.xpLoot);
-        console.log(`${this.name.toUpperCase()} IS DEAD AND DROPPED ${this.xpLoot} XP AND ${this.eqpLoot.name.toUpperCase()}\nYOUR XP POINTS: ${p.getExpAmount()} / ${p.getRequiredExp()}\n`);
+        // console.log(`${this.name.toUpperCase()} IS DEAD AND DROPPED ${this.xpLoot} XP AND ${this.eqpLoot.name.toUpperCase()}\nYOUR XP POINTS: ${p.getExpAmount()} / ${p.getRequiredExp()}\n`);
         if (p.getInventory().length < 11) {
-            if(p.getEquippedMeeleAmount() === 0) {
-                this.eqpLoot = new BasicSword('Sword', 3, 1, 0, 1, true);
+            if (p.getEquippedMeeleAmount() === 0) {
+                this.eqpLoot.push(new BasicSword('Sword', 3, 1, 0, 1, true));
+            }
+            if (p.getEquippedHelmetAmount() === 0) {
+                this.eqpLoot.push(new Helmet('Elmo', 0, 5, 0, 1, true));
             }
             p.addToInventory(this.eqpLoot);
         } else {
