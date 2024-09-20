@@ -1,4 +1,5 @@
 // import * as readline from 'readline';
+import BasicSword from "./BasicSword.js";
 import Entity from "./Entity.js";
 import Equipment from './Equipment.js';
 
@@ -8,13 +9,19 @@ export default class Player extends Entity {
     private level: number;
     private requiredExp: number;
     private skillPoints: number;
+    private equippedMeeleAmount: number;
+    private equippedHelmetAmount: number;
+    private equippedArmorAmount: number;
     constructor(mHp: number, hp: number, strength: number, def: number, name: string) {
         super(mHp, hp, strength, def, name);
         this.inventory = [];
         this.expAmount = 0;
         this.level = 1;
-        this.requiredExp = 1;
+        this.requiredExp = this.level * 10;
         this.skillPoints = 0;
+        this.equippedMeeleAmount = 0;
+        this.equippedHelmetAmount = 0;
+        this.equippedArmorAmount = 0;
     }
 
     attackSound(): void {
@@ -54,17 +61,17 @@ export default class Player extends Entity {
 
     getDamage(atkPwr: number) {
         let damage = atkPwr - this.def;
-        if(damage < 0) {
+        if (damage < 0) {
             damage = 0;
         }
         if (this.hp - damage <= 0) {
-            this.level = 1;
-            this.strength = 1;
-            this.def = 1;
-            this.maxHp = 10;
-            this.hp = 10;
-            console.log('Game over!');
-            console.log(`----NEW GAME----\nLevel: ${this.level}\nHP: ${this.hp} / ${this.maxHp}`);
+            // this.level = 1;
+            // this.strength = 1;
+            // this.def = 1;
+            // this.maxHp = 10;
+            this.hp = 0;
+            console.log(`${damage} DAMAGE TAKEN!\n\n---GAME OVER!!---\n`);
+            // console.log(`----NEW GAME----\nLevel: ${this.level}\nHP: ${this.hp} / ${this.maxHp}\n`);
         } else {
             this.hp -= damage;
             console.log(`${damage} DAMAGE TAKEN!`);
@@ -79,6 +86,17 @@ export default class Player extends Entity {
         this.inventory.push(eqp);
         console.log(`INVENTORY:`);
         this.inventory.forEach(x => console.log(x));
+        this.applyEquipmentBonus();
+    }
+
+    applyEquipmentBonus(){
+        this.inventory.forEach(x => {
+            if(x.equipped){
+                this.def += x.def;
+                this.strength += x.atk;
+                console.log(`\n${x.name} ${x.level} EQUIPPED! NEW STATS:\nDEF: ${this.def}\nSTRENGTH: ${this.strength}\n`);
+            }
+        });
     }
 
     getInventory(): Array<Equipment> {
@@ -91,6 +109,18 @@ export default class Player extends Entity {
 
     getMaxHp(): number {
         return this.maxHp;
+    }
+
+    getEquippedHelmetAmount(): number {
+        return this.equippedHelmetAmount;
+    }
+
+    getEquipedArmorAmount(): number {
+        return this.equippedArmorAmount;
+    }
+
+    getEquippedMeeleAmount(): number {
+        return this.equippedMeeleAmount;
     }
 }
 

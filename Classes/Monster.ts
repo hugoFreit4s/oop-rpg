@@ -11,7 +11,7 @@ export default class Monster extends Entity {
         super(mHp, hp, strength, def, name);
         this.race = race;
         this.xpLoot = xpLoot;
-        this.eqpLoot = new BasicSword('Sword', 3, 1, 0, 1);
+        this.eqpLoot = new BasicSword('Sword', 3, 1, 0, 1, false);
     }
 
     attackSound(): void {
@@ -34,9 +34,12 @@ export default class Monster extends Entity {
 
     dropLoot(p: Player) {
         p.increaseExp(this.xpLoot);
+        console.log(`${this.name.toUpperCase()} IS DEAD AND DROPPED ${this.xpLoot} XP AND ${this.eqpLoot.name.toUpperCase()}\nYOUR XP POINTS: ${p.getExpAmount()} / ${p.getRequiredExp()}\n`);
         if (p.getInventory().length < 11) {
+            if(p.getEquippedMeeleAmount() === 0) {
+                this.eqpLoot = new BasicSword('Sword', 3, 1, 0, 1, true);
+            }
             p.addToInventory(this.eqpLoot);
-            console.log(`${this.name} IS DEAD AND DROPPED ${this.xpLoot} XP AND ${this.eqpLoot.name}\nYOUR XP POINTS: ${p.getExpAmount()} / ${p.getRequiredExp()}`);
         } else {
             console.log(`ITEM NOT COLLECTED, INVENTORY FULL!`);
         }

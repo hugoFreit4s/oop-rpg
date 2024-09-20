@@ -4,13 +4,15 @@ export default class Equipment {
     def;
     magic;
     level;
-    equiped;
-    constructor(name, atkPwr, defPwr, magicPwr, level) {
+    equipped;
+    category;
+    constructor(name, atkPwr, defPwr, magicPwr, level, equipped, category) {
         this.name = name;
         this.atk = atkPwr;
         this.def = defPwr;
         this.magic = magicPwr;
         this.level = level;
-        this.equiped = false;
+        this.equipped = equipped;
+        this.category = category;
     }
 }

@@ -4,13 +4,15 @@ export default abstract class Equipment {
     def: number;
     magic: number;
     level: number;
-    equiped: boolean;
-    constructor(name: string, atkPwr: number, defPwr: number, magicPwr: number, level: number){
+    equipped: boolean;
+    category: "Meele" | "Helmet" | "Armor";
+    constructor(name: string, atkPwr: number, defPwr: number, magicPwr: number, level: number, equipped: boolean, category: "Meele" | "Helmet" | "Armor"){
         this.name = name;
         this.atk = atkPwr;
         this.def = defPwr;
         this.magic = magicPwr;
         this.level = level;
-        this.equiped = false;
+        this.equipped = equipped;
+        this.category = category;
     }
 }
