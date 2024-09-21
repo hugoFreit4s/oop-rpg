@@ -1,15 +1,11 @@
-// import * as readline from 'readline';
-import BasicSword from "./BasicSword.js";
 import Entity from "./Entity.js";
-import Equipment from './Equipment.js';
-
 export default class Player extends Entity {
-    private inventory: Array<Equipment>;
-    private expAmount: number;
-    private level: number;
-    private requiredExp: number;
-    private skillPoints: number;
-    constructor(mHp: number, hp: number, strength: number, def: number, name: string) {
+    inventory;
+    expAmount;
+    level;
+    requiredExp;
+    skillPoints;
+    constructor(mHp, hp, strength, def, name) {
         super(mHp, hp, strength, def, name);
         this.inventory = [];
         this.expAmount = 0;
@@ -17,43 +13,37 @@ export default class Player extends Entity {
         this.requiredExp = this.level * 10;
         this.skillPoints = 0;
     }
-
-    attackSound(): void {
+    attackSound() {
     }
-
-    increaseExp(value: number): void {
+    increaseExp(value) {
         this.expAmount += value;
         if (this.expAmount >= this.requiredExp) {
             this.levelUp();
             this.expAmount -= this.requiredExp;
         }
     }
-
     levelUp() {
         this.hp = this.maxHp;
         this.level++;
         this.maxHp++;
         this.strength++;
         this.def++;
-
         if (this.level < 6) {
             this.skillPoints = 3;
-        } else if (this.level < 10) {
+        }
+        else if (this.level < 10) {
             this.skillPoints = 5;
-        } else {
+        }
+        else {
             this.skillPoints = 7;
         }
-
         console.log(`LVL UP! New level: ${this.level}\nSkill points earned: ${this.skillPoints}`);
         // this.setSkillPoints();
     }
-
-
     getLevel() {
         return this.level;
     }
-
-    getDamage(atkPwr: number) {
+    getDamage(atkPwr) {
         let damage = atkPwr - this.def;
         if (damage < 0) {
             damage = 0;
@@ -66,24 +56,22 @@ export default class Player extends Entity {
             this.hp = 0;
             console.log(`${damage} DAMAGE TAKEN!\n\n---GAME OVER!!---\n`);
             // console.log(`----NEW GAME----\nLevel: ${this.level}\nHP: ${this.hp} / ${this.maxHp}\n`);
-        } else {
+        }
+        else {
             this.hp -= damage;
             console.log(`${damage} DAMAGE TAKEN!`);
         }
     }
-
-    getExpAmount(): number {
+    getExpAmount() {
         return this.expAmount;
     }
-
-    addToInventory(eqp: Array<Equipment>): void {
+    addToInventory(eqp) {
         eqp.forEach(x => this.inventory.push(x));
         // this.inventory.push(eqp);
         this.applyEquipmentBonus();
     }
-
     applyEquipmentBonus() {
-        this.inventory.forEach(x => { // Posso usar 2 argumentos em 1 forEach só?
+        this.inventory.forEach(x => {
             this.inventory.forEach(y => {
                 if (x.category === y.category) {
                     y.equipped = false;
@@ -92,45 +80,36 @@ export default class Player extends Entity {
                     this.strength += x.atk;
                     console.log(`\n${x.name} LEVEL ${x.level} EQUIPPED! NEW STATS:\nDEF: ${this.def}\nSTRENGTH: ${this.strength}`);
                 }
-            })
+            });
         });
-
         console.log(`INVENTORY: `);
         this.inventory.forEach(x => console.log(x));
     }
-
-    getInventory(): Array<Equipment> {
+    getInventory() {
         return this.inventory;
     }
-
-    getRequiredExp(): number {
+    getRequiredExp() {
         return this.requiredExp;
     }
-
-    getMaxHp(): number {
+    getMaxHp() {
         return this.maxHp;
     }
 }
-
 // setSkillPoints() {
 //     const rl = readline.createInterface({
 //         input: process.stdin,
 //         output: process.stdout
 //     });
-
 //     const askQuestions = (question: string) => {
 //         return new Promise<string>((resolve) => {
 //             rl.question(question, answer => resolve(answer));
 //         });
 //     };
-
 //     const distribute = async () => {
 //         while (this.skillPoints > 0) {
 //             console.log(`\nYour stats: Strength: ${ this.strength }, Defense: ${ this.def }, Max HP: ${ this.maxHp }`);
 //             console.log(`Remaining skill points: ${ this.skillPoints }`);
-
 //             const choice = await askQuestions(`Where would you like to assign a point ? (strength / agility / intelligence) : `);
-
 //             switch (choice.toLowerCase()) {
 //                 case '1':
 //                     this.strength++;
@@ -145,12 +124,10 @@ export default class Player extends Entity {
 //                     console.log('Invalid choice. Try again.');
 //                     continue;
 //             }
-
 //             this.skillPoints--;
 //         }
 //         rl.close();
 //         console.log(`\nFinal stats: Strength: ${ this.strength }, Defense: ${ this.def }, Max HP: ${ this.maxHp }`);
 //     };
-
 //     distribute();
 // }
