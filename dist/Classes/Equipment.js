@@ -4,12 +4,14 @@ export default class Equipment extends Item {
     def;
     magic;
     level;
-    constructor(name, atkPwr, defPwr, magicPwr, level) {
+    id;
+    constructor(name, atkPwr, defPwr, magicPwr, level, id) {
         super(name);
         this.atk = atkPwr;
         this.def = defPwr;
         this.magic = magicPwr;
         this.level = level;
+        this.id = id;
     }
     //Atk
     get eqpAtk() {

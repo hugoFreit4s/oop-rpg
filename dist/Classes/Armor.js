@@ -1,7 +1,7 @@
 import Equipment from "./Equipment.js";
 export default class Armor extends Equipment {
-    constructor(armorName, armorAtk, armorDef, armorMagic, armorLevel) {
-        super(armorName, armorAtk, armorDef, armorMagic, armorLevel);
+    constructor(armorName, armorAtk, armorDef, armorMagic, armorLevel, id) {
+        super(armorName, armorAtk, armorDef, armorMagic, armorLevel, id);
     }
     increaseLvl() {
         this.level++;

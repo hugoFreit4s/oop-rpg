@@ -5,12 +5,14 @@ export default abstract class Equipment extends Item {
     def: number;
     magic: number;
     level: number;
-    constructor(name: string, atkPwr: number, defPwr: number, magicPwr: number, level: number) {
+    id: string;
+    constructor(name: string, atkPwr: number, defPwr: number, magicPwr: number, level: number, id: string) {
         super(name);
         this.atk = atkPwr;
         this.def = defPwr;
         this.magic = magicPwr;
         this.level = level;
+        this.id = id;
     }
 
     abstract increaseLvl(): void;

@@ -1,6 +1,9 @@
 import Entity from "./Entity.js";
 import Equipment from './Equipment.js';
 import Helper from "./Helper.js";
+import SteelArmor from "./SteelArmor.js";
+import WoodArmor from "./WoodArmor.js";
+import WoodSword from "./WoodSword.js";
 
 export default class Player extends Entity {
     private level: number;
@@ -13,7 +16,7 @@ export default class Player extends Entity {
         super(mHp, hp, atkPwr, def, name);
         this.level = 1;
         this.itemInventory = [];
-        this.equipedItems = [];
+        this.equipedItems = [new WoodSword(), new SteelArmor(), new WoodArmor(), new WoodArmor(), new WoodArmor()];
         this.expAmount = 0;
         this.requiredExp = this.level < 5 ? this.level * 5 : this.level * 10;
         this.skillPoints = 0;
@@ -62,6 +65,41 @@ export default class Player extends Entity {
         console.log(`Updated inventory:\n`);
         for (let i = 0; i < this.itemInventory.length; i++) {
             console.log(this.itemInventory[i].equipmentName);
+        }
+    }
+
+    equipItem(equipment: Equipment, slot: number): void {
+        const provisoryArr: Array<Equipment> = [];
+        const provisoryArr2: Array<Equipment> = [];
+        if (this.equipedItems.length >= 5) {
+
+            this.itemInventory.map((x) => {
+                if (x.id !== equipment.id) provisoryArr.push(x);
+            });
+            provisoryArr.push(this.equipedItems[slot]);
+            this.itemInventory = [...provisoryArr];
+
+            for (let i = 0; i < this.equipedItems.length - 1; i++) {
+                if (i !== slot) provisoryArr2.push(this.equipedItems[i]);
+            }
+            provisoryArr2.push(equipment);
+
+            this.equipedItems = [...provisoryArr2];
+        } else {
+            this.equipedItems.push(equipment);
+            this.itemInventory.map((x) => {
+                if (equipment.id !== x.id) provisoryArr.push(x);
+            });
+            this.itemInventory = [...provisoryArr];
+        }
+
+        console.log('equiped items:');
+        for (let i = 0; i < this.equipedItems.length; i++) {
+            console.log(this.equipedItems[i]);
+        }
+        console.log('inventory:');
+        for (let i = 0; i < this.itemInventory.length; i++) {
+            console.log(this.itemInventory[i]);
         }
     }
 }
