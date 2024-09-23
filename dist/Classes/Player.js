@@ -1,12 +1,10 @@
 import Entity from "./Entity.js";
 import Helper from "./Helper.js";
-import SteelArmor from "./SteelArmor.js";
-import WoodArmor from "./WoodArmor.js";
-import WoodSword from "./WoodSword.js";
 export default class Player extends Entity {
     level;
     itemInventory;
-    equipedItems;
+    equipedWeapon;
+    equipedArmor;
     expAmount;
     requiredExp;
     skillPoints;
@@ -14,7 +12,8 @@ export default class Player extends Entity {
         super(mHp, hp, atkPwr, def, name);
         this.level = 1;
         this.itemInventory = [];
-        this.equipedItems = [new WoodSword(), new SteelArmor(), new WoodArmor(), new WoodArmor(), new WoodArmor()];
+        this.equipedWeapon = null;
+        this.equipedArmor = null;
         this.expAmount = 0;
         this.requiredExp = this.level < 5 ? this.level * 5 : this.level * 10;
         this.skillPoints = 0;
@@ -60,38 +59,50 @@ export default class Player extends Entity {
             console.log(this.itemInventory[i].equipmentName);
         }
     }
-    equipItem(equipment, slot) {
+    equipItem(equipment) {
         const provisoryArr = [];
-        const provisoryArr2 = [];
-        if (this.equipedItems.length >= 5) {
-            this.itemInventory.map((x) => {
-                if (x.id !== equipment.id)
-                    provisoryArr.push(x);
-            });
-            provisoryArr.push(this.equipedItems[slot]);
-            this.itemInventory = [...provisoryArr];
-            for (let i = 0; i < this.equipedItems.length - 1; i++) {
-                if (i !== slot)
-                    provisoryArr2.push(this.equipedItems[i]);
+        if (equipment.category === 'Weapon') {
+            if (this.equipedWeapon !== null) {
+                this.itemInventory.map((x) => {
+                    if (equipment.id !== x.id)
+                        provisoryArr.push(x);
+                });
+                provisoryArr.push(this.equipedWeapon);
+                this.itemInventory = [...provisoryArr];
+                this.equipedWeapon = equipment;
             }
-            provisoryArr2.push(equipment);
-            this.equipedItems = [...provisoryArr2];
+            else {
+                this.itemInventory.map((x) => {
+                    if (equipment.id !== x.id)
+                        provisoryArr.push(x);
+                });
+                this.itemInventory = [...provisoryArr];
+                this.equipedWeapon = equipment;
+            }
         }
         else {
-            this.equipedItems.push(equipment);
-            this.itemInventory.map((x) => {
-                if (equipment.id !== x.id)
-                    provisoryArr.push(x);
-            });
-            this.itemInventory = [...provisoryArr];
+            if (this.equipedArmor !== null) {
+                this.itemInventory.map((x) => {
+                    if (equipment.id !== x.id)
+                        provisoryArr.push(x);
+                });
+                provisoryArr.push(this.equipedArmor);
+                this.itemInventory = [...provisoryArr];
+                this.equipedWeapon = equipment;
+            }
+            else {
+                this.itemInventory.map((x) => {
+                    if (equipment.id !== x.id)
+                        provisoryArr.push(x);
+                });
+                this.itemInventory = [...provisoryArr];
+                this.equipedArmor = equipment;
+            }
         }
-        console.log('equiped items:');
-        for (let i = 0; i < this.equipedItems.length; i++) {
-            console.log(this.equipedItems[i]);
-        }
-        console.log('inventory:');
+        console.log(`Equiped weapon: ${this.equipedWeapon?.equipmentName}\nEquiped armor: ${this.equipedArmor?.equipmentName}`);
+        console.log('Inventory:');
         for (let i = 0; i < this.itemInventory.length; i++) {
-            console.log(this.itemInventory[i]);
+            console.log(this.itemInventory[i].equipmentName);
         }
     }
 }
