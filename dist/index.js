@@ -1,27 +1,28 @@
-import Monster from "./Classes/Monster.js";
+import Enemy from "./Classes/Enemy.js";
 import Player from "./Classes/Player.js";
-let player = new Player(15, 15, 10, 3, 'Eu');
-// mHp, hp, atk, def, name
-function turn(p) {
-    let m = new Monster(2, 10, 10, 5, 3, 'Rat', 'Human');
-    // xpLoot, mHp, hp, atk, def, name, race
+import Helper from "./Classes/Helper.js";
+import WoodArmor from "./Classes/WoodArmor.js";
+import WoodSword from "./Classes/WoodSword.js";
+let p = new Player(30, 30, 5, 3, 'Eu');
+function turn(player) {
+    let drop = new WoodArmor();
+    console.log(drop);
+    let enemy = new Enemy(10, 10, 4, 2, 'Blest', 2, 'Troll', [drop]);
     function executeTurn() {
-        if (p.hp > 0) {
-            console.log("\n-----TURNO-----");
-            m.getDamage(p.strength, p);
-            p.getDamage(m.strength);
-            if (m.hp <= 0) {
-                console.log(`${m.name} foi derrotado!`);
-                m = new Monster(2, 10, 10, 6, 1, 'Rat', 'Human');
-            }
-            console.log(`\nYour HP: ${p.hp} / ${p.getMaxHp()}\nENEMY HP: ${m.hp} / ${m.maxHp}`);
-            setTimeout(executeTurn, 2000);
+        if (p.hp > 0 && enemy.hp > 0) {
+            console.log(`\n----New Game----\nYour HP: ${Helper.showHp(p)}\nEnemy HP: ${Helper.showHp(enemy)}`);
+            player.getDmg(Helper.calcDamage(enemy.atkPwr, player.def));
+            enemy.getDmg(Helper.calcDamage(player.atkPwr, enemy.def));
+            // setTimeout(executeTurn, 1000);
         }
-        else {
-            player = new Player(15, 15, 5, 3, 'Eu');
-            turn(player);
+        else if (enemy.hp === 0) {
+            p.increasePlayerExpAmount(enemy.xpLoot);
+            Helper.transferLootToPlayer(enemy.eqpLoot, p);
+            enemy = new Enemy(13, 13, 4, 3, 'Yuwek', 5, 'Orc', [new WoodSword]);
+            console.log(`You won!\nNew enemy: ${enemy.name} -- HP: ${Helper.showHp(enemy)}`);
+            setTimeout(executeTurn, 2000);
         }
     }
     executeTurn();
 }
-turn(player);
+turn(p);
