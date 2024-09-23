@@ -7,10 +7,12 @@ import SteelArmor from "./Classes/SteelArmor.js";
 let p = new Player(30, 30, 5, 3, 'Eu');
 function turn(player) {
     let enemy = new Enemy(10, 10, 4, 2, 'Blest', 2, 'Troll', [new WoodArmor]);
-    let loot = [new WoodSword, new SteelArmor];
+    let loot = [new WoodSword, new SteelArmor, new WoodArmor];
     p.addToInventory(loot);
     p.equipItem(loot[1]);
     p.equipItem(loot[0]);
+    p.equipItem(loot[2]);
+    p.equipItem(loot[1]);
     function executeTurn() {
         if (p.hp > 0 && enemy.hp > 0) {
             console.log(`\n----New Game----\nYour HP: ${Helper.showHp(p)}\nEnemy HP: ${Helper.showHp(enemy)}`);

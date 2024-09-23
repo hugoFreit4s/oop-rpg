@@ -88,7 +88,7 @@ export default class Player extends Entity {
                 });
                 provisoryArr.push(this.equipedArmor);
                 this.itemInventory = [...provisoryArr];
-                this.equipedWeapon = equipment;
+                this.equipedArmor = equipment;
             }
             else {
                 this.itemInventory.map((x) => {
