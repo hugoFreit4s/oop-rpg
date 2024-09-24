@@ -3,10 +3,10 @@ export default class Item {
     constructor(name) {
         this.name = name;
     }
-    set putEquipmentName(newName) {
+    set putItemName(newName) {
         this.name = newName;
     }
-    get equipmentName() {
+    get itemName() {
         return this.name;
     }
 }

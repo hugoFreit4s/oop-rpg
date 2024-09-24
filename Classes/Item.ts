@@ -4,11 +4,11 @@ export default abstract class Item {
         this.name = name;
     }
 
-    set putEquipmentName(newName: string){
+    set putItemName(newName: string){
         this.name = newName;
     }
     
-    get equipmentName(): string {
+    get itemName(): string {
         return this.name;
     }
 }

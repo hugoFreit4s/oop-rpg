@@ -65,7 +65,7 @@ export default class Player extends Entity {
 
         console.log(`Updated inventory:\n`);
         for (let i = 0; i < this.itemInventory.length; i++) {
-            console.log(this.itemInventory[i].equipmentName);
+            console.log(this.itemInventory[i].itemName);
         }
     }
 
@@ -103,10 +103,46 @@ export default class Player extends Entity {
             }
         }
 
-        console.log(`Equiped weapon: ${this.equipedWeapon?.equipmentName}\nEquiped armor: ${this.equipedArmor?.equipmentName}`);
+        console.log(`Equiped weapon: ${this.equipedWeapon?.itemName}\nEquiped armor: ${this.equipedArmor?.itemName}`);
         console.log('Inventory:');
         for (let i = 0; i < this.itemInventory.length; i++) {
-            console.log(this.itemInventory[i].equipmentName);
+            console.log(this.itemInventory[i].itemName);
+        }
+    }
+
+    unequipItem(equipment: Equipment) {
+        switch (equipment.category) {
+            case 'Weapon':
+                if (this.itemInventory.length >= 10) {
+                    console.log('No room to unequip. Inventory full!');
+                } else if (equipment.id !== this.equipedWeapon?.id) {
+                    console.log('Invalid ID');
+                } else {
+                    this.itemInventory.push(equipment);
+                    this.equipedWeapon = null;
+                    console.log(`Armor unequiped! ${this.equipedWeapon}\nUpdated inventory:`);
+                    for (let i = 0; i < this.itemInventory.length; i++) {
+                        console.log(this.itemInventory[i].itemName);
+                    }
+                }
+                break;
+            case 'Armor':
+                if (this.itemInventory.length >= 10) {
+                    console.log('No room to unequip. Inventory full!');
+                } else if (equipment.id !== this.equipedArmor?.id) {
+                    console.log('Invalid ID');
+                } else {
+                    this.itemInventory.push(equipment);
+                    this.equipedArmor = null;
+                    console.log(`Armor unequiped! ${this.equipedWeapon}\nUpdated inventory:`);
+                    for (let i = 0; i < this.itemInventory.length; i++) {
+                        console.log(this.itemInventory[i].itemName);
+                    }
+                }
+                break;
+            default:
+                console.log('Invalid');
+                break;
         }
     }
 }

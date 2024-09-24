@@ -11,10 +11,9 @@ function turn(player: Player) {
     let enemy = new Enemy(10, 10, 4, 2, 'Blest', 2, 'Troll', [new WoodArmor]);
     let loot = [new WoodSword, new SteelArmor, new WoodArmor];
     p.addToInventory(loot);
-    p.equipItem(loot[1]);
     p.equipItem(loot[0]);
-    p.equipItem(loot[2]);
-    p.equipItem(loot[1]);
+    p.unequipItem(loot[0]);
+    p.unequipItem(loot[0]);
 
     function executeTurn() {
         if (p.hp > 0 && enemy.hp > 0) {
