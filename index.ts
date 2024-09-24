@@ -1,13 +1,12 @@
 import Enemy from "./Classes/Enemy.js";
 import Player from "./Classes/Player.js";
 import Helper from "./Classes/Helper.js";
-import WoodArmor from "./Classes/WoodArmor.js";
-import WoodSword from "./Classes/WoodSword.js";
-import SteelArmor from "./Classes/SteelArmor.js";
 import UI from "./Classes/UI.js";
+import Weapon from "./Classes/Weapon.js";
+import Armor from "./Classes/Armor.js";
 
 let p: Player = new Player(30, 30, 5, 3, 'Eu');
-let e: Enemy = new Enemy(10, 10, 5, 2, 'Kashrt', 3, 'Orc', [new WoodSword]);
+let e: Enemy = new Enemy(10, 10, 5, 2, 'Kashrt', 3, 'Orc', [new Weapon('WoodSword', 2, 0, 0, 1, crypto.randomUUID())]);
 const attackBtn = document.getElementById('atk_btn');
 
 UI.renderScreen(p, e);
@@ -21,6 +20,7 @@ attackBtn?.addEventListener('click', () => {
         UI.renderScreen(p, e);
         UI.setBattleMessage(string);
     } else if (e.hp === 0) {
+        let message = `${e.name} defeated! DROP: ${e.xpLoot}XP AND ${e.loot[0].itemName}\nYour XP: ${p.playerExpAmount}`;
         const races = ['Orc', 'Troll', 'Human'];
 
         const randomMaxHP = Helper.generateRandomIntNumber(10);
@@ -30,9 +30,10 @@ attackBtn?.addEventListener('click', () => {
         const randomName = Helper.generateRandomString(5, 'Lower');
         const randomXpLoot = Helper.generateRandomIntNumber(5);
         const randomRace = races[Helper.generateRandomIntNumber(2)];
-        e = new Enemy(randomMaxHP, hp, randomStrength, randomDef, randomName, randomXpLoot, 'Orc', [new WoodSword]);
+        e = new Enemy(randomMaxHP, hp, randomStrength, randomDef, randomName, randomXpLoot, 'Orc', [new Armor('Wood Armor', 0, 2, 0, 1, crypto.randomUUID())]);
         UI.renderScreen(p, e);
-        UI.setBattleMessage(`New enemy: ${e.name} --- HP: ${e.hp} / ${e.maxHp}`);
+        message += `\nNew enemy: ${e.name} --- HP: ${e.hp} / ${e.maxHp}`
+        UI.setBattleMessage(message);
         // p.increasePlayerExpAmount(e.xpLoot);
     } else if (p.hp === 0) {
         UI.renderScreen(p, e);
