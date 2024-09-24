@@ -15,4 +15,19 @@ export default class Helper {
     static transferLootToPlayer(enemyLoot: Array<Equipment>, player: Player): void {
         player.addToInventory(enemyLoot);
     }
+
+    static generateRandomIntNumber(limit: number): number {
+        return Math.floor(Math.random() * limit);
+    }
+
+    static generateRandomString(numberOfCharacters: number, capitalization: 'Upper' | 'Lower'): string {
+        const characters = 'abcdefghijklmnopqrstuvwxyz';
+        let result = '';
+        if (numberOfCharacters > 0) {
+            for (let i = 0; i < numberOfCharacters; i++) {
+                result += characters.charAt(this.generateRandomIntNumber(characters.length));
+            }
+        }
+        return result;
+    }
 }

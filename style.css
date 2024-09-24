@@ -1,4 +1,4 @@
-main {
+.app_div {
     display: flex;
     flex-direction: column;
 }
@@ -9,11 +9,11 @@ main {
     margin-bottom: 10px;
 }
 
-.monster_life_bar {
+.enemy_lifebar {
     margin-top: 20px;
 }
 
-.life_bar_bg {
+.lifebar_bg {
     position: absolute;
     border: 1px solid black;
     border-radius: 6px;
@@ -21,19 +21,7 @@ main {
     width: 100px;
 }
 
-#pcurrent_life_bar {
-    position: absolute;
-    border: 1px solid black;
-    border-right: 0px;
-    border-radius: 6px;
-    background-color: #00FF00;
-    height: 10px;
-    width: 100px;
-    transition: width 0.3s ease;
-}
-
-
-#mcurrent_life_bar {
+.pcurrent_lifebar {
     position: absolute;
     border: 1px solid black;
     border-right: 0px;

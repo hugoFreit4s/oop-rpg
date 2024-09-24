@@ -26,7 +26,7 @@ export default class Player extends Entity {
     }
     getDmg(dmg) {
         this.hp = this.hp - dmg < 0 ? 0 : this.hp - dmg;
-        console.log(`Damage taken: ${dmg} --- ${this.name} HP: ${this.hp} / ${this.maxHp}`);
+        return `Damage taken: ${dmg} --- ${this.name} HP: ${this.hp} / ${this.maxHp}`;
     }
     increasePlayerExpAmount(expToAdd) {
         this.expAmount += expToAdd;

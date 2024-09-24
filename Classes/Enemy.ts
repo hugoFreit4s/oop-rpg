@@ -12,8 +12,8 @@ export default class Enemy extends Entity {
         this.eqpLoot = loot;
     }
 
-    getDmg(dmg: number): void {
+    getDmg(dmg: number): string {
         this.hp = this.hp - dmg < 0 ? 0 : this.hp - dmg;
-        console.log(`Damage given: ${dmg} --- ${this.name} HP: ${this.hp} / ${this.maxHp}`)
+        return `Damage given: ${dmg} --- ${this.name} HP: ${this.hp} / ${this.maxHp}`;
     }
 }
