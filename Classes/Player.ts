@@ -31,6 +31,10 @@ export default class Player extends Entity {
         return this.requiredExp;
     }
 
+    get playerLevel(): number {
+        return this.level;
+    }
+
     getDmg(dmg: number): string {
         this.hp = this.hp - dmg < 0 ? 0 : this.hp - dmg;
         return `Damage taken: ${dmg} --- ${this.name} HP: ${this.hp} / ${this.maxHp}`;

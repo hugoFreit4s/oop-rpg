@@ -13,7 +13,7 @@
     margin-top: 20px;
 }
 
-.lifebar_bg {
+.bar_bg {
     position: absolute;
     border: 1px solid black;
     border-radius: 6px;
@@ -32,7 +32,7 @@
     transition: width 0.3s ease;
 }
 
-#current_level_bar{
+.level_bar{
     position: absolute;
     border: 1px solid black;
     border-right: 0px;

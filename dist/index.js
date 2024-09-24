@@ -29,10 +29,10 @@ attackBtn?.addEventListener('click', () => {
         const randomXpLoot = Helper.generateRandomIntNumber(5);
         const randomRace = races[Helper.generateRandomIntNumber(2)];
         e = new Enemy(randomMaxHP, hp, randomStrength, randomDef, randomName, randomXpLoot, 'Orc', [new Armor('Wood Armor', 0, 2, 0, 1, crypto.randomUUID())]);
-        UI.renderScreen(p, e);
+        p.increasePlayerExpAmount(e.xpLoot);
         message += `\nNew enemy: ${e.name} --- HP: ${e.hp} / ${e.maxHp}`;
+        UI.renderScreen(p, e);
         UI.setBattleMessage(message);
-        // p.increasePlayerExpAmount(e.xpLoot);
     }
     else if (p.hp === 0) {
         UI.renderScreen(p, e);

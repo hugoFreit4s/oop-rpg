@@ -12,6 +12,7 @@ export default class UI {
         //Life percentage calc
         const playerLifePercentage = (p.hp / p.maxHp) * 100;
         const enemyLifePercentage = (e.hp / e.maxHp) * 100;
+        const levelPercentage = (p.playerExpAmount / p.playerRequiredExp) * 100;
 
         //External div
         const appDiv = document.createElement('div');
@@ -24,6 +25,22 @@ export default class UI {
         messageElement.id = 'message'
         msgDiv.appendChild(messageElement);
 
+        //Level div
+        const levelDiv = document.createElement('div');
+        const levelElement = document.createElement('p');
+        const levelBar = document.createElement('div');
+        levelBar.classList.add('life_bar');
+        const levelBarBg = document.createElement('div');
+        levelBarBg.classList.add('bar_bg');
+        const currentLevelBar = document.createElement('div');
+        currentLevelBar.classList.add('level_bar');
+        currentLevelBar.style.width = `${levelPercentage}%`
+        levelElement.innerText = p.playerLevel.toString();
+        levelBar.appendChild(levelBarBg);
+        levelBar.appendChild(currentLevelBar);
+        levelDiv.appendChild(levelElement);
+        levelDiv.appendChild(levelBar);
+
         //Attack button
         const attackBtn = document.createElement('button');
         attackBtn.innerText = 'Attack!';
@@ -32,7 +49,7 @@ export default class UI {
         const playerLifebarDiv = document.createElement('div');
         playerLifebarDiv.classList.add('life_bar');
         const playerLifebarBg = document.createElement('div');
-        playerLifebarBg.classList.add('lifebar_bg');
+        playerLifebarBg.classList.add('bar_bg');
         const playerCurrentLifeDiv = document.createElement('div');
         playerCurrentLifeDiv.classList.add('pcurrent_lifebar');
         playerCurrentLifeDiv.style.width = `${playerLifePercentage}%`;
@@ -42,7 +59,7 @@ export default class UI {
         enemyLifebarDiv.classList.add('life_bar');
         enemyLifebarDiv.classList.add('enemy_lifebar');
         const enemyLifebarBg = document.createElement('div');
-        enemyLifebarBg.classList.add('lifebar_bg');
+        enemyLifebarBg.classList.add('bar_bg');
         const enemyCurrentLifeDiv = document.createElement('div');
         enemyCurrentLifeDiv.classList.add('pcurrent_lifebar');
         enemyCurrentLifeDiv.style.width = `${enemyLifePercentage}%`;
@@ -54,6 +71,7 @@ export default class UI {
         playerLifebarDiv.appendChild(playerLifebarBg);
         playerLifebarDiv.appendChild(playerCurrentLifeDiv);
         //Append to appDiv
+        appDiv.appendChild(levelDiv);
         appDiv.appendChild(msgDiv);
         appDiv.appendChild(playerLifebarDiv);
         appDiv.appendChild(enemyLifebarDiv);
