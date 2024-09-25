@@ -6,8 +6,8 @@ export default class Equipment extends Item {
     level;
     id;
     category;
-    constructor(name, atkPwr, defPwr, magicPwr, level, id, category) {
-        super(name);
+    constructor(name, atkPwr, defPwr, magicPwr, level, id, category, value) {
+        super(name, value);
         this.atk = atkPwr;
         this.def = defPwr;
         this.magic = magicPwr;

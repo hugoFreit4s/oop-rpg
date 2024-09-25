@@ -7,9 +7,14 @@ export default class UI {
     static generateHTMLElements(p, e) {
         const container = document.getElementById('app_container');
         //Life percentage calc
-        const playerLifePercentage = (p.hp / p.maxHp) * 100;
-        const enemyLifePercentage = (e.hp / e.maxHp) * 100;
+        const playerLifePercentage = (p.entityHp / p.entityMaxHp) * 100;
+        const enemyLifePercentage = (e.entityHp / e.entityMaxHp) * 100;
         const levelPercentage = (p.playerExpAmount / p.playerRequiredExp) * 100;
+        //Gold div
+        const goldDiv = document.createElement('div');
+        const goldAmountElement = document.createElement('p');
+        goldAmountElement.innerText = `Gold: ${p.entityGoldAmount}`;
+        goldDiv.appendChild(goldAmountElement);
         //Messages div
         const msgDiv = document.createElement('div');
         msgDiv.id = 'message_container';
@@ -118,19 +123,29 @@ export default class UI {
                         itemDefElement.innerText = `Defense power: ${x.def}`;
                         const itemMagicElement = document.createElement('p');
                         itemMagicElement.innerText = `Magic power: ${x.magic}`;
+                        const itemValueElement = document.createElement('p');
+                        itemValueElement.innerText = `Value: ${x.itemValue}`;
                         const eqpItemBtn = document.createElement('button');
                         eqpItemBtn.innerText = 'Equip item';
                         eqpItemBtn.addEventListener('click', () => {
                             p.equipItem(x);
                             this.renderScreen(p, e);
                         });
+                        const sellItemBtn = document.createElement('button');
+                        sellItemBtn.innerText = 'Sell';
+                        sellItemBtn.addEventListener('click', () => {
+                            p.sellEquipment(x);
+                            this.renderScreen(p, e);
+                        });
                         itemAttributesDiv.appendChild(itemAttackElement);
                         itemAttributesDiv.appendChild(itemDefElement);
                         itemAttributesDiv.appendChild(itemMagicElement);
+                        itemAttributesDiv.appendChild(itemValueElement);
                         itemDiv.appendChild(itemNameElement);
                         itemDiv.appendChild(itemLevelElement);
                         itemDiv.appendChild(itemAttributesDiv);
                         itemDiv.appendChild(eqpItemBtn);
+                        itemDiv.appendChild(sellItemBtn);
                         opennedInvDiv.appendChild(itemDiv);
                     });
                 }
@@ -156,6 +171,7 @@ export default class UI {
         enemyLifebarDiv.appendChild(enemyLifebarBg);
         enemyLifebarDiv.appendChild(enemyCurrentLifeDiv);
         //Append to appDiv
+        container.appendChild(goldDiv);
         container.appendChild(levelDiv);
         container.appendChild(msgDiv);
         container.appendChild(playerLifebarDiv);

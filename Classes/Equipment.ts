@@ -7,8 +7,8 @@ export default abstract class Equipment extends Item {
     level: number;
     id: string;
     category: "Weapon" | "Armor";
-    constructor(name: string, atkPwr: number, defPwr: number, magicPwr: number, level: number, id: string, category: "Weapon" | "Armor") {
-        super(name);
+    constructor(name: string, atkPwr: number, defPwr: number, magicPwr: number, level: number, id: string, category: "Weapon" | "Armor", value: number) {
+        super(name, value);
         this.atk = atkPwr;
         this.def = defPwr;
         this.magic = magicPwr;

@@ -9,11 +9,13 @@ export default class Helper {
     }
 
     static showHp(character: Player | Enemy) {
-        return `${character.hp} / ${character.maxHp}`;
+        return `${character.entityHp} / ${character.entityMaxHp}`;
     }
 
-    static transferLootToPlayer(enemyLoot: Array<Equipment>, player: Player): void {
-        player.addToInventory(enemyLoot);
+    static transferLootToPlayer(enemy: Enemy, enemyGoldLoot: number, player: Player): void {
+        player.addToInventory(enemy.loot);
+        player.increaseGoldAmount = enemyGoldLoot;
+        enemy.decreaseGoldAmount = enemy.entityGoldAmount;
     }
 
     static generateRandomIntNumber(limit: number): number {

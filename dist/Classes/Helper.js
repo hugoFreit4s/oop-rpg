@@ -4,10 +4,12 @@ export default class Helper {
         return damage;
     }
     static showHp(character) {
-        return `${character.hp} / ${character.maxHp}`;
+        return `${character.entityHp} / ${character.entityMaxHp}`;
     }
-    static transferLootToPlayer(enemyLoot, player) {
-        player.addToInventory(enemyLoot);
+    static transferLootToPlayer(enemy, enemyGoldLoot, player) {
+        player.addToInventory(enemy.loot);
+        player.increaseGoldAmount = enemyGoldLoot;
+        enemy.decreaseGoldAmount = enemy.entityGoldAmount;
     }
     static generateRandomIntNumber(limit) {
         return Math.floor(Math.random() * limit);

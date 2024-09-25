@@ -5,39 +5,40 @@ import UI from "./Classes/UI.js";
 import Weapon from "./Classes/Weapon.js";
 import Armor from "./Classes/Armor.js";
 let p = new Player(30, 30, 5, 3, 'Eu');
-let e = new Enemy(10, 10, 5, 2, 'Kashrt', 3, 'Orc', [new Weapon('WoodSword', 2, 0, 0, 1, crypto.randomUUID())]);
+let e = new Enemy(10, 10, 5, 2, 'Kashrt', 3, 'Orc', [new Weapon('WoodSword', 2, 0, 0, 1, crypto.randomUUID(), Helper.generateRandomIntNumber(5))], Helper.generateRandomIntNumber(10));
 const attackBtn = document.getElementById('atk_btn');
 UI.renderScreen(p, e);
 UI.generateBattleMessages(p, e, 'start');
 attackBtn?.addEventListener('click', () => {
     // executeTurn();
-    if (p.hp > 0 && e.hp > 0) {
+    if (p.entityHp > 0 && e.entityHp > 0) {
         let string = '';
-        string += p.getDmg(Helper.calcDamage(e.atkPwr, p.def));
-        string += "\n" + e.getDmg(Helper.calcDamage(p.atkPwr, e.def));
+        string += p.getDmg(Helper.calcDamage(e.entityAtkPwr, p.entityDef));
+        string += "\n" + e.getDmg(Helper.calcDamage(p.entityAtkPwr, e.entityDef));
         UI.renderScreen(p, e);
         UI.setBattleMessage(string);
     }
-    else if (e.hp === 0) {
-        let message = `${e.name} defeated! DROP: ${e.xpLoot}XP AND ${e.loot[0].itemName}\nYour XP: ${p.playerExpAmount}`;
-        const races = ['Orc', 'Troll', 'Human'];
-        p.addToInventory(e.loot);
+    else if (e.entityHp === 0) {
+        let message = `${e.entityName} defeated! DROP: ${e.xpLoot}XP, ${e.loot[0].itemName} AND ${e.entityGoldAmount} GOLD\nYour XP: ${p.playerExpAmount}`;
+        const races = ['Orc', 'Troll', 'Human']; // To do
+        // p.addToInventory(e.loot);
+        Helper.transferLootToPlayer(e, e.entityGoldAmount, p);
         const randomMaxHP = Helper.generateRandomIntNumber(10);
         const hp = randomMaxHP;
         const randomStrength = Helper.generateRandomIntNumber(10);
         const randomDef = Helper.generateRandomIntNumber(5);
         const randomName = Helper.generateRandomString(5, 'Lower');
         const randomXpLoot = Helper.generateRandomIntNumber(5);
-        const randomRace = races[Helper.generateRandomIntNumber(2)];
-        e = new Enemy(randomMaxHP, hp, randomStrength, randomDef, randomName, randomXpLoot, 'Orc', [new Armor('Steel Sword', 4, 1, 0, 1, crypto.randomUUID())]);
+        const randomGoldAmount = Helper.generateRandomIntNumber(10);
+        e = new Enemy(randomMaxHP, hp, randomStrength, randomDef, randomName, randomXpLoot, 'Orc', [new Armor('Steel Sword', 4, 1, 0, 1, crypto.randomUUID(), Helper.generateRandomIntNumber(5))], randomGoldAmount);
         p.increasePlayerExpAmount(e.xpLoot);
-        message += `\nNew enemy: ${e.name} --- HP: ${e.hp} / ${e.maxHp}`;
+        message += `\nNew enemy: ${e.entityName} --- HP: ${e.entityHp} / ${e.entityMaxHp}`;
         UI.renderScreen(p, e);
         UI.setBattleMessage(message);
     }
-    else if (p.hp === 0) {
+    else if (p.entityHp === 0) {
         UI.renderScreen(p, e);
-        UI.setBattleMessage(`DEFEATED! HP: ${p.hp} / ${p.maxHp}`);
+        UI.setBattleMessage(`DEFEATED! HP: ${p.entityHp} / ${p.entityMaxHp}`);
     }
 });
 // function turn(player: Player) {

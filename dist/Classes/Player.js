@@ -9,7 +9,7 @@ export default class Player extends Entity {
     requiredExp;
     skillPoints;
     constructor(mHp, hp, atkPwr, def, name) {
-        super(mHp, hp, atkPwr, def, name);
+        super(mHp, hp, atkPwr, def, name, 0);
         this.level = 1;
         this.itemInventory = [];
         this.equipedWeapon = null;
@@ -41,8 +41,8 @@ export default class Player extends Entity {
         return reqExp;
     }
     getDmg(dmg) {
-        this.hp = this.hp - dmg < 0 ? 0 : this.hp - dmg;
-        return `Damage taken: ${dmg} --- ${this.name} HP: ${this.hp} / ${this.maxHp}`;
+        this.putHp = this.entityHp - dmg < 0 ? 0 : this.entityHp - dmg;
+        return `Damage taken: ${dmg} --- ${this.entityName} HP: ${this.entityHp} / ${this.entityMaxHp}`;
     }
     increasePlayerExpAmount(expToAdd) {
         this.expAmount += expToAdd;
@@ -53,13 +53,13 @@ export default class Player extends Entity {
     }
     upLevel() {
         this.level++;
-        this.maxHp++;
-        this.atkPwr++;
-        this.def++;
-        this.hp = this.maxHp;
+        this.putMaxHp = this.entityMaxHp + 1;
+        this.putAtkPwr = this.entityAtkPwr + 1;
+        this.putDef = this.entityDef + 1;
+        this.putHp = this.entityMaxHp;
         this.expAmount -= this.requiredExp;
         this.requiredExp = this.setRequiredExpAmount(this.level);
-        console.log(`\nLevel UP! --- New Level: ${this.level} --- Your stats increased by one\n----New stats----\nMaximum HP: ${this.maxHp}\nDefense power: ${this.def}\nAttack power: ${this.atkPwr}\nLife restored! HP: ${Helper.showHp(this)}\nNew exp amount: ${this.expAmount} / ${this.requiredExp}`);
+        console.log(`\nLevel UP! --- New Level: ${this.level} --- Your stats increased by one\n----New stats----\nMaximum HP: ${this.entityMaxHp}\nDefense power: ${this.entityDef}\nAttack power: ${this.entityAtkPwr}\nLife restored! HP: ${Helper.showHp(this)}\nNew exp amount: ${this.expAmount} / ${this.requiredExp}`);
         if (this.expAmount >= this.requiredExp)
             this.upLevel();
     }
@@ -75,6 +75,15 @@ export default class Player extends Entity {
         for (let i = 0; i < this.itemInventory.length; i++) {
             console.log(this.itemInventory[i].itemName);
         }
+    }
+    sellEquipment(eqp) {
+        const tempArr = [];
+        this.increaseGoldAmount = eqp.itemValue;
+        this.itemInventory.map(x => {
+            if (eqp.id !== x.id)
+                tempArr.push(x);
+        });
+        this.itemInventory = [...tempArr];
     }
     equipItem(equipment) {
         const provisoryArr = [];
