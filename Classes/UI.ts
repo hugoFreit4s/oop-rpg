@@ -18,12 +18,21 @@ export default class UI {
         //Level and Gold div
         const topDiv = document.createElement('div');
         topDiv.classList.add('top_div');
-        
+
         //Gold div
         const goldDiv = document.createElement('div');
         const goldAmountElement = document.createElement('p');
         goldAmountElement.innerText = `Gold: ${p.entityGoldAmount}`;
         goldDiv.appendChild(goldAmountElement);
+
+        //Stats div
+        const statsDiv = document.createElement('div');
+        const atkPwrElement = document.createElement('p');
+        atkPwrElement.innerText = `Attack power: ${p.entityAtkPwr}`;
+        const defPwrElement = document.createElement('p');
+        defPwrElement.innerText = `Defense power: ${p.entityDef}`;
+        statsDiv.appendChild(atkPwrElement);
+        statsDiv.appendChild(defPwrElement);
 
         //Messages div
         const msgDiv = document.createElement('div');
@@ -39,7 +48,7 @@ export default class UI {
 
         const levelElement = document.createElement('p');
         levelElement.innerText = `Level: ${p.playerLevel.toString()}`;
-        
+
         const experienceBar = document.createElement('div'); // Problemas aqui
         experienceBar.classList.add('life_bar');
         const levelBarBg = document.createElement('div');
@@ -56,6 +65,7 @@ export default class UI {
 
         topDiv.appendChild(levelDiv);
         topDiv.appendChild(goldDiv);
+        topDiv.appendChild(statsDiv);
 
         //Player lifebar
         const playerLifebarDiv = document.createElement('div');
@@ -82,6 +92,7 @@ export default class UI {
         enemyCurrentLifeDiv.classList.add('level_bar');
         enemyCurrentLifeDiv.style.width = `${enemyLifePercentage}%`;
 
+        currentLevelBar.style.border = levelPercentage <= 0 ? '0px' : '1px solid black';
         enemyCurrentLifeDiv.style.border = enemyLifePercentage <= 0 ? '0px' : '1px solid black';
         playerCurrentLifeDiv.style.border = playerLifePercentage <= 0 ? '0px' : '1px solid black';
 

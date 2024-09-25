@@ -125,6 +125,8 @@ export default class Player extends Entity {
                 this.equipedArmor = equipment;
             }
         }
+        this.putAtkPwr = this.entityAtkPwr + equipment.atk;
+        this.putDef = this.entityDef + equipment.def;
         console.log(`Equiped weapon: ${this.equipedWeapon?.itemName}\nEquiped armor: ${this.equipedArmor?.itemName}`);
         console.log('Inventory:');
         for (let i = 0; i < this.itemInventory.length; i++) {
@@ -169,5 +171,9 @@ export default class Player extends Entity {
                 console.log('Invalid');
                 break;
         }
+        const ogAtkPower = this.entityAtkPwr - equipment.atk;
+        const ogDefPower = this.entityDef - equipment.def;
+        this.putAtkPwr = ogAtkPower;
+        this.putDef = ogDefPower;
     }
 }

@@ -18,6 +18,14 @@ export default class UI {
         const goldAmountElement = document.createElement('p');
         goldAmountElement.innerText = `Gold: ${p.entityGoldAmount}`;
         goldDiv.appendChild(goldAmountElement);
+        //Stats div
+        const statsDiv = document.createElement('div');
+        const atkPwrElement = document.createElement('p');
+        atkPwrElement.innerText = `Attack power: ${p.entityAtkPwr}`;
+        const defPwrElement = document.createElement('p');
+        defPwrElement.innerText = `Defense power: ${p.entityDef}`;
+        statsDiv.appendChild(atkPwrElement);
+        statsDiv.appendChild(defPwrElement);
         //Messages div
         const msgDiv = document.createElement('div');
         msgDiv.classList.add('msg_div');
@@ -45,6 +53,7 @@ export default class UI {
         levelDiv.appendChild(levelElement); //HELP😭
         topDiv.appendChild(levelDiv);
         topDiv.appendChild(goldDiv);
+        topDiv.appendChild(statsDiv);
         //Player lifebar
         const playerLifebarDiv = document.createElement('div');
         playerLifebarDiv.classList.add('life_bar');
@@ -68,6 +77,7 @@ export default class UI {
         enemyCurrentLifeDiv.classList.add('current_life_lifebar');
         enemyCurrentLifeDiv.classList.add('level_bar');
         enemyCurrentLifeDiv.style.width = `${enemyLifePercentage}%`;
+        currentLevelBar.style.border = levelPercentage <= 0 ? '0px' : '1px solid black';
         enemyCurrentLifeDiv.style.border = enemyLifePercentage <= 0 ? '0px' : '1px solid black';
         playerCurrentLifeDiv.style.border = playerLifePercentage <= 0 ? '0px' : '1px solid black';
         //Equiped items
