@@ -60,6 +60,34 @@ export default class UI {
         enemyCurrentLifeDiv.style.width = `${enemyLifePercentage}%`;
         enemyCurrentLifeDiv.style.border = enemyLifePercentage <= 0 ? '0px' : '1px solid black';
         playerCurrentLifeDiv.style.border = playerLifePercentage <= 0 ? '0px' : '1px solid black';
+        //Equiped items
+        const equipedItemsDiv = document.createElement('div');
+        const equipedWeaponDiv = document.createElement('div');
+        const equipedWeaponElement = document.createElement('p');
+        equipedWeaponElement.innerText = p.playerWeapon === null ? "No weapons equiped!" : `Equiped weapon: ${p.playerWeapon.itemName}`;
+        const unequipWeaponBtn = document.createElement('button');
+        unequipWeaponBtn.innerText = 'Unequip';
+        unequipWeaponBtn.addEventListener('click', () => {
+            p.unequipItem(p.playerWeapon);
+            this.renderScreen(p, e);
+        });
+        unequipWeaponBtn.style.display = p.playerWeapon === null ? 'none' : 'show';
+        equipedWeaponDiv.appendChild(equipedWeaponElement);
+        equipedWeaponDiv.appendChild(unequipWeaponBtn);
+        const equipedArmorDiv = document.createElement('div');
+        const equipedArmorElement = document.createElement('p');
+        equipedArmorElement.innerText = p.playerArmor === null ? "No armor equiped" : `Equiped armor: ${p.playerArmor.itemName}`;
+        const unequipArmornBtn = document.createElement('button');
+        unequipArmornBtn.innerText = 'Unequip';
+        unequipArmornBtn.addEventListener('click', () => {
+            p.unequipItem(p.playerArmor);
+            this.renderScreen(p, e);
+        });
+        unequipArmornBtn.style.display = p.playerArmor === null ? 'none' : 'show';
+        equipedArmorDiv.appendChild(equipedArmorElement);
+        equipedArmorDiv.appendChild(unequipArmornBtn);
+        equipedItemsDiv.appendChild(equipedWeaponDiv);
+        equipedItemsDiv.appendChild(equipedArmorDiv);
         //Open inventory
         let openned = false;
         const inventoryDiv = document.createElement('div');
@@ -81,6 +109,8 @@ export default class UI {
                         itemDiv.classList.add('item_div');
                         const itemNameElement = document.createElement('p');
                         itemNameElement.innerText = x.itemName;
+                        const itemLevelElement = document.createElement('p');
+                        itemLevelElement.innerText = `Level: ${x.eqpLvl}`;
                         const itemAttributesDiv = document.createElement('div');
                         const itemAttackElement = document.createElement('p');
                         itemAttackElement.innerText = `Attack power: ${x.atk}`;
@@ -88,11 +118,19 @@ export default class UI {
                         itemDefElement.innerText = `Defense power: ${x.def}`;
                         const itemMagicElement = document.createElement('p');
                         itemMagicElement.innerText = `Magic power: ${x.magic}`;
+                        const eqpItemBtn = document.createElement('button');
+                        eqpItemBtn.innerText = 'Equip item';
+                        eqpItemBtn.addEventListener('click', () => {
+                            p.equipItem(x);
+                            this.renderScreen(p, e);
+                        });
                         itemAttributesDiv.appendChild(itemAttackElement);
                         itemAttributesDiv.appendChild(itemDefElement);
                         itemAttributesDiv.appendChild(itemMagicElement);
                         itemDiv.appendChild(itemNameElement);
+                        itemDiv.appendChild(itemLevelElement);
                         itemDiv.appendChild(itemAttributesDiv);
+                        itemDiv.appendChild(eqpItemBtn);
                         opennedInvDiv.appendChild(itemDiv);
                     });
                 }
@@ -122,6 +160,7 @@ export default class UI {
         container.appendChild(msgDiv);
         container.appendChild(playerLifebarDiv);
         container.appendChild(enemyLifebarDiv);
+        container.appendChild(equipedItemsDiv);
         container.appendChild(inventoryDiv);
     }
     static generateBattleMessages(p, e, moment) {
