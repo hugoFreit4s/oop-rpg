@@ -40,7 +40,7 @@ export default class UI {
         const levelElement = document.createElement('p');
         levelElement.innerText = `Level: ${p.playerLevel.toString()}`;
         
-        const experienceBar = document.createElement('div');
+        const experienceBar = document.createElement('div'); // Problemas aqui
         experienceBar.classList.add('life_bar');
         const levelBarBg = document.createElement('div');
         levelBarBg.classList.add('bar_bg');
