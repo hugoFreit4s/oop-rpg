@@ -22,6 +22,7 @@ attackBtn?.addEventListener('click', () => {
     } else if (e.hp === 0) {
         let message = `${e.name} defeated! DROP: ${e.xpLoot}XP AND ${e.loot[0].itemName}\nYour XP: ${p.playerExpAmount}`;
         const races = ['Orc', 'Troll', 'Human'];
+        p.addToInventory(e.loot);
 
         const randomMaxHP = Helper.generateRandomIntNumber(10);
         const hp = randomMaxHP;
