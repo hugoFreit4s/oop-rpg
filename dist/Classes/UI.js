@@ -1,10 +1,10 @@
 export default class UI {
-    static renderScreen(p, e) {
+    static renderScreen(p, e, s) {
         const container = document.getElementById('app_container');
         container.innerHTML = '';
-        this.generateHTMLElements(p, e);
+        this.generateHTMLElements(p, e, s);
     }
-    static generateHTMLElements(p, e) {
+    static generateHTMLElements(p, e, s) {
         const container = document.getElementById('app_container');
         //Life percentage calc
         const playerLifePercentage = (p.entityHp / p.entityMaxHp) * 100;
@@ -89,7 +89,7 @@ export default class UI {
         unequipWeaponBtn.innerText = 'Unequip';
         unequipWeaponBtn.addEventListener('click', () => {
             p.unequipItem(p.playerWeapon);
-            this.renderScreen(p, e);
+            this.renderScreen(p, e, s);
         });
         unequipWeaponBtn.style.display = p.playerWeapon === null ? 'none' : 'show';
         equipedWeaponDiv.appendChild(equipedWeaponElement);
@@ -101,7 +101,7 @@ export default class UI {
         unequipArmornBtn.innerText = 'Unequip';
         unequipArmornBtn.addEventListener('click', () => {
             p.unequipItem(p.playerArmor);
-            this.renderScreen(p, e);
+            this.renderScreen(p, e, s);
         });
         unequipArmornBtn.style.display = p.playerArmor === null ? 'none' : 'show';
         equipedArmorDiv.appendChild(equipedArmorElement);
@@ -144,13 +144,13 @@ export default class UI {
                         eqpItemBtn.innerText = 'Equip item';
                         eqpItemBtn.addEventListener('click', () => {
                             p.equipItem(x);
-                            this.renderScreen(p, e);
+                            this.renderScreen(p, e, s);
                         });
                         const sellItemBtn = document.createElement('button');
                         sellItemBtn.innerText = 'Sell';
                         sellItemBtn.addEventListener('click', () => {
                             p.sellEquipment(x);
-                            this.renderScreen(p, e);
+                            this.renderScreen(p, e, s);
                         });
                         itemAttributesDiv.appendChild(itemAttackElement);
                         itemAttributesDiv.appendChild(itemDefElement);
@@ -177,6 +177,36 @@ export default class UI {
             }
         }); //Problemas ao re-renderizar a tela neste ponto (booleano 'openned')!!!!!
         inventoryDiv.appendChild(openInventoryBtn);
+        //Shop
+        const shopDiv = document.createElement('div');
+        shopDiv.classList.add('shop_div');
+        const oppenShopBtn = document.createElement('button');
+        oppenShopBtn.innerText = 'Shop';
+        oppenShopBtn.addEventListener('click', () => {
+            const equipmentsToSellDiv = document.createElement('div');
+            equipmentsToSellDiv.classList.add('eqp_to_sell_div');
+            s.equipmentsToBuy.forEach((x) => {
+                const equipmentDiv = document.createElement('div');
+                equipmentDiv.classList.add('eqp_to_sell');
+                const eqpNameElement = document.createElement('p');
+                eqpNameElement.innerText = `Name: ${x.itemName}`;
+                const eqpValueElement = document.createElement('p');
+                eqpValueElement.innerText = `Value: ${x.itemValue}`;
+                const buyEqpButton = document.createElement('button');
+                buyEqpButton.innerText = 'Buy equipment';
+                buyEqpButton.addEventListener('click', () => {
+                    const shopLog = s.buyEquipment(x, p);
+                    console.log(shopLog);
+                    this.renderScreen(p, e, s);
+                });
+                equipmentDiv.appendChild(eqpNameElement);
+                equipmentDiv.appendChild(eqpValueElement);
+                equipmentDiv.appendChild(buyEqpButton);
+                equipmentsToSellDiv.appendChild(equipmentDiv);
+            });
+            shopDiv.appendChild(equipmentsToSellDiv);
+        });
+        shopDiv.appendChild(oppenShopBtn);
         //Append to playerLifebarDiv
         playerLifebarDiv.appendChild(playerNameElement);
         playerLifebarDiv.appendChild(playerLifebarBg);
@@ -192,6 +222,7 @@ export default class UI {
         container.appendChild(enemyLifebarDiv);
         container.appendChild(equipedItemsDiv);
         container.appendChild(inventoryDiv);
+        container.appendChild(shopDiv);
     }
     static generateBattleMessages(p, e, moment) {
         const msgDiv = document.getElementById('message_container');
