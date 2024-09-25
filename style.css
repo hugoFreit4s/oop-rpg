@@ -1,16 +1,23 @@
-.app_div {
+main {
     display: flex;
     flex-direction: column;
+}
+
+.level_div {
+    padding-top: 20px;
+    display: flex;
+}
+
+.level_bar {
+    position: absolute;
+    border-radius: 6px;
+    height: 10px;
 }
 
 .life_bar {
     position: relative;
     max-width: 100px;
     margin-bottom: 10px;
-}
-
-.enemy_lifebar {
-    margin-top: 20px;
 }
 
 .bar_bg {
@@ -21,23 +28,8 @@
     width: 100px;
 }
 
-.pcurrent_lifebar {
-    position: absolute;
-    border: 1px solid black;
+.current_life_lifebar {
     border-right: 0px;
-    border-radius: 6px;
     background-color: #00FF00;
-    height: 10px;
-    width: 100px;
-    transition: width 0.3s ease;
-}
-
-.level_bar{
-    position: absolute;
-    border: 1px solid black;
-    border-right: 0px;
-    border-radius: 6px;
-    background-color: #00FF00;
-    height: 10px;
     transition: width 0.3s ease;
 }
