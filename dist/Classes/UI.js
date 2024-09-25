@@ -39,6 +39,8 @@ export default class UI {
         //Player lifebar
         const playerLifebarDiv = document.createElement('div');
         playerLifebarDiv.classList.add('life_bar');
+        const playerNameElement = document.createElement('div');
+        playerNameElement.innerText = p.entityName;
         const playerLifebarBg = document.createElement('div');
         playerLifebarBg.classList.add('bar_bg');
         const playerCurrentLifeDiv = document.createElement('div');
@@ -48,17 +50,21 @@ export default class UI {
         const enemyLifebarDiv = document.createElement('div');
         enemyLifebarDiv.classList.add('life_bar');
         enemyLifebarDiv.classList.add('enemy_lifebar');
+        const enemyNameElement = document.createElement('p');
+        enemyNameElement.innerText = e.entityName;
         const enemyLifebarBg = document.createElement('div');
         enemyLifebarBg.classList.add('bar_bg');
         const enemyCurrentLifeDiv = document.createElement('div');
         enemyCurrentLifeDiv.classList.add('pcurrent_lifebar');
         enemyCurrentLifeDiv.style.width = `${enemyLifePercentage}%`;
-        //Append to enemyLifebarDiv
-        enemyLifebarDiv.appendChild(enemyLifebarBg);
-        enemyLifebarDiv.appendChild(enemyCurrentLifeDiv);
         //Append to playerLifebarDiv
+        playerLifebarDiv.appendChild(playerNameElement);
         playerLifebarDiv.appendChild(playerLifebarBg);
         playerLifebarDiv.appendChild(playerCurrentLifeDiv);
+        //Append to enemyLifebarDiv
+        enemyLifebarDiv.appendChild(enemyNameElement);
+        enemyLifebarDiv.appendChild(enemyLifebarBg);
+        enemyLifebarDiv.appendChild(enemyCurrentLifeDiv);
         //Append to appDiv
         appDiv.appendChild(levelDiv);
         appDiv.appendChild(msgDiv);

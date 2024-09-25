@@ -19,7 +19,7 @@ export default class Player extends Entity {
         this.equipedWeapon = null;
         this.equipedArmor = null;
         this.expAmount = 0;
-        this.requiredExp = this.level < 5 ? this.level * 5 : this.level * 10;
+        this.requiredExp = this.setRequiredExpAmount(this.level);
         this.skillPoints = 0;
     }
 
@@ -33,6 +33,11 @@ export default class Player extends Entity {
 
     get playerLevel(): number {
         return this.level;
+    }
+
+    setRequiredExpAmount(level: number): number {
+        const reqExp = level < 5 ? level * 5 : level * 10;
+        return reqExp;
     }
 
     getDmg(dmg: number): string {
@@ -55,6 +60,7 @@ export default class Player extends Entity {
         this.def++;
         this.hp = this.maxHp;
         this.expAmount -= this.requiredExp;
+        this.requiredExp = this.setRequiredExpAmount(this.level);
         console.log(`\nLevel UP! --- New Level: ${this.level} --- Your stats increased by one\n----New stats----\nMaximum HP: ${this.maxHp}\nDefense power: ${this.def}\nAttack power: ${this.atkPwr}\nLife restored! HP: ${Helper.showHp(this)}\nNew exp amount: ${this.expAmount} / ${this.requiredExp}`);
         if (this.expAmount >= this.requiredExp) this.upLevel();
     }
