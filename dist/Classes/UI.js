@@ -10,6 +10,9 @@ export default class UI {
         const playerLifePercentage = (p.entityHp / p.entityMaxHp) * 100;
         const enemyLifePercentage = (e.entityHp / e.entityMaxHp) * 100;
         const levelPercentage = (p.playerExpAmount / p.playerRequiredExp) * 100;
+        //Level and Gold div
+        const topDiv = document.createElement('div');
+        topDiv.classList.add('top_div');
         //Gold div
         const goldDiv = document.createElement('div');
         const goldAmountElement = document.createElement('p');
@@ -17,6 +20,7 @@ export default class UI {
         goldDiv.appendChild(goldAmountElement);
         //Messages div
         const msgDiv = document.createElement('div');
+        msgDiv.classList.add('msg_div');
         msgDiv.id = 'message_container';
         const messageElement = document.createElement('p');
         messageElement.id = 'message';
@@ -25,21 +29,22 @@ export default class UI {
         const levelDiv = document.createElement('div');
         levelDiv.classList.add('level_div');
         const levelElement = document.createElement('p');
+        levelElement.innerText = `Level: ${p.playerLevel.toString()}`;
         const experienceBar = document.createElement('div');
         experienceBar.classList.add('life_bar');
         const levelBarBg = document.createElement('div');
         levelBarBg.classList.add('bar_bg');
         const currentLevelBar = document.createElement('div');
+        currentLevelBar.classList.add('current_life_lifebar');
         currentLevelBar.classList.add('level_bar');
         currentLevelBar.style.width = `${levelPercentage}%`;
-        levelElement.innerText = p.playerLevel.toString();
+        console.log(`${e.xpLoot}`);
         experienceBar.appendChild(levelBarBg);
         experienceBar.appendChild(currentLevelBar);
         levelDiv.appendChild(experienceBar);
         levelDiv.appendChild(levelElement); //HELP😭
-        //Attack button
-        const attackBtn = document.createElement('button');
-        attackBtn.innerText = 'Attack!';
+        topDiv.appendChild(levelDiv);
+        topDiv.appendChild(goldDiv);
         //Player lifebar
         const playerLifebarDiv = document.createElement('div');
         playerLifebarDiv.classList.add('life_bar');
@@ -171,8 +176,7 @@ export default class UI {
         enemyLifebarDiv.appendChild(enemyLifebarBg);
         enemyLifebarDiv.appendChild(enemyCurrentLifeDiv);
         //Append to appDiv
-        container.appendChild(goldDiv);
-        container.appendChild(levelDiv);
+        container.appendChild(topDiv);
         container.appendChild(msgDiv);
         container.appendChild(playerLifebarDiv);
         container.appendChild(enemyLifebarDiv);

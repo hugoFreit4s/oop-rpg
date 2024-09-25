@@ -5,13 +5,14 @@ main {
 
 .level_div {
     padding-top: 20px;
-    display: flex;
 }
 
 .level_bar {
     position: absolute;
     border-radius: 6px;
     height: 10px;
+    border: 1px solid black;
+
 }
 
 .life_bar {
@@ -50,4 +51,25 @@ main {
 .item_div {
     border: 1px solid rgba(128, 128, 128, 0.397);
     border-radius: 6px;
+}
+
+.top_div{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.atk_btn{
+    display: flex;
+    justify-content: center;
+}
+
+.atk_btn button {
+    padding: 10px;
+    width: 100px;
+    border-radius: 5px;
+}
+
+.msg_div{
+    height: 100px;
 }
