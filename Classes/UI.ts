@@ -37,7 +37,7 @@ export default class UI {
         experienceBar.appendChild(levelBarBg);
         experienceBar.appendChild(currentLevelBar);
         levelDiv.appendChild(experienceBar);
-        levelDiv.appendChild(levelElement);
+        levelDiv.appendChild(levelElement); //HELP😭
 
         //Attack button
         const attackBtn = document.createElement('button');
@@ -71,6 +71,56 @@ export default class UI {
         enemyCurrentLifeDiv.style.border = enemyLifePercentage <= 0 ? '0px' : '1px solid black';
         playerCurrentLifeDiv.style.border = playerLifePercentage <= 0 ? '0px' : '1px solid black';
 
+        //Open inventory
+        let openned = false;
+        const inventoryDiv = document.createElement('div');
+        inventoryDiv.classList.add('inventory_div');
+        const openInventoryBtn = document.createElement('button');
+        openInventoryBtn.innerText = 'Open inventory'
+        openInventoryBtn.style.width = '100px';
+        openInventoryBtn.addEventListener('click', () => {
+            const opennedInvDiv = document.createElement('div');
+            opennedInvDiv.classList.add('openned_inv_div');
+            inventoryDiv.appendChild(opennedInvDiv);
+            openned = !openned;
+            console.log(openned);
+            if (openned) {
+                openInventoryBtn.innerText = 'Close inventory';
+                if (p.playerInventory.length >= 1) {
+                    p.playerInventory.forEach(x => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.classList.add('item_div');
+                        const itemNameElement = document.createElement('p');
+                        itemNameElement.innerText = x.itemName;
+                        const itemAttributesDiv = document.createElement('div');
+                        const itemAttackElement = document.createElement('p');
+                        itemAttackElement.innerText = `Attack power: ${x.atk}`;
+                        const itemDefElement = document.createElement('p');
+                        itemDefElement.innerText = `Defense power: ${x.def}`;
+                        const itemMagicElement = document.createElement('p');
+                        itemMagicElement.innerText = `Magic power: ${x.magic}`;
+
+                        itemAttributesDiv.appendChild(itemAttackElement);
+                        itemAttributesDiv.appendChild(itemDefElement);
+                        itemAttributesDiv.appendChild(itemMagicElement);
+                        itemDiv.appendChild(itemNameElement);
+                        itemDiv.appendChild(itemAttributesDiv);
+                        opennedInvDiv.appendChild(itemDiv);
+                    });
+                } else {
+                    const emptyInvMsg = document.createElement('p');
+                    emptyInvMsg.innerText = 'Empty!';
+                    opennedInvDiv.appendChild(emptyInvMsg);
+                }
+            } else {
+                openInventoryBtn.innerText = 'Open inventory';
+                inventoryDiv.innerHTML = '';
+                inventoryDiv.appendChild(openInventoryBtn);
+            }
+        }); //Problemas ao re-renderizar a tela neste ponto (booleano 'openned')!!!!!
+
+        inventoryDiv.appendChild(openInventoryBtn);
+
         //Append to playerLifebarDiv
         playerLifebarDiv.appendChild(playerNameElement);
         playerLifebarDiv.appendChild(playerLifebarBg);
@@ -84,6 +134,7 @@ export default class UI {
         container!.appendChild(msgDiv);
         container!.appendChild(playerLifebarDiv);
         container!.appendChild(enemyLifebarDiv);
+        container!.appendChild(inventoryDiv);
     }
 
     static generateBattleMessages(p: Player, e: Enemy, moment: 'start' | 'attack' | 'enemyDefeated' | 'playerDefeated') {

@@ -35,6 +35,10 @@ export default class Player extends Entity {
         return this.level;
     }
 
+    get playerInventory(): Array<Equipment> {
+        return this.itemInventory;
+    }
+
     setRequiredExpAmount(level: number): number {
         const reqExp = level < 5 ? level * 5 : level * 10;
         return reqExp;
