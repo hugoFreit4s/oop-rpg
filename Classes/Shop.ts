@@ -18,6 +18,7 @@ export default class Shop {
             this.equipmentsToBuy.map(x => {
                 if (x.id !== eqp.id) tempArr.push(x);
             });
+            buyer.decreaseGoldAmount = eqp.itemValue;
             this.equipmentsToBuy = [...tempArr];
         }
     }

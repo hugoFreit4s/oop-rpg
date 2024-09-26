@@ -5,6 +5,7 @@ export default class UI {
         this.generateTopDivHTMLElements(p, e);
         this.generateBattleHTMLElements(p, e);
         this.generateInventoryHTMLElements(p, e, s);
+        this.generateShopHTMLElements(p, e, s);
     }
     static generateTopDivHTMLElements(p, e) {
         //Exp percentage calc
@@ -30,7 +31,6 @@ export default class UI {
         currentLevelBar.classList.add('life_div');
         currentLevelBar.classList.add('bar');
         currentLevelBar.style.width = `${levelPercentage}%`;
-        console.log(`${e.xpLoot}`);
         experienceBar.appendChild(levelBarBg);
         experienceBar.appendChild(currentLevelBar);
         levelDiv.appendChild(experienceBar);
@@ -194,7 +194,48 @@ export default class UI {
         container.appendChild(equipedItemsDiv);
         container.appendChild(inventoryDiv);
     }
-    static generateHTMLElements(p, e, s) {
+    static generateShopHTMLElements(p, e, s) {
+        //Shop
+        const shopDiv = document.createElement('div');
+        shopDiv.classList.add('inventory_div');
+        const oppenShopBtn = document.createElement('button');
+        let openned = false;
+        oppenShopBtn.innerText = 'Shop';
+        oppenShopBtn.style.marginTop = '320px';
+        oppenShopBtn.addEventListener('click', () => {
+            openned = !openned;
+            const equipmentsToSellDiv = document.createElement('div');
+            equipmentsToSellDiv.classList.add('eqp_to_sell_div');
+            if (openned) {
+                s.equipmentsToBuy.forEach((x) => {
+                    const equipmentDiv = document.createElement('div');
+                    equipmentDiv.classList.add('eqp_to_sell');
+                    const eqpNameElement = document.createElement('p');
+                    eqpNameElement.innerText = `Name: ${x.itemName}`;
+                    const eqpValueElement = document.createElement('p');
+                    eqpValueElement.innerText = `Value: ${x.itemValue}`;
+                    const buyEqpButton = document.createElement('button');
+                    buyEqpButton.innerText = 'Buy equipment';
+                    buyEqpButton.addEventListener('click', () => {
+                        s.buyEquipment(x, p);
+                        this.renderScreen(p, e, s);
+                    });
+                    equipmentDiv.appendChild(eqpNameElement);
+                    equipmentDiv.appendChild(eqpValueElement);
+                    equipmentDiv.appendChild(buyEqpButton);
+                    equipmentsToSellDiv.appendChild(equipmentDiv);
+                });
+                shopDiv.appendChild(equipmentsToSellDiv);
+            }
+            else {
+                this.renderScreen(p, e, s);
+            }
+        });
+        shopDiv.appendChild(oppenShopBtn);
+        //Append to appDiv
+        container.appendChild(shopDiv);
+    }
+    static generateStatsHTMLElements(p, e, s) {
         //Stats div
         const statsDiv = document.createElement('div');
         const atkPwrElement = document.createElement('p');
@@ -203,38 +244,6 @@ export default class UI {
         defPwrElement.innerText = `Defense power: ${p.entityDef}`;
         statsDiv.appendChild(atkPwrElement);
         statsDiv.appendChild(defPwrElement);
-        //Shop
-        const shopDiv = document.createElement('div');
-        shopDiv.classList.add('shop_div');
-        const oppenShopBtn = document.createElement('button');
-        oppenShopBtn.innerText = 'Shop';
-        oppenShopBtn.addEventListener('click', () => {
-            const equipmentsToSellDiv = document.createElement('div');
-            equipmentsToSellDiv.classList.add('eqp_to_sell_div');
-            s.equipmentsToBuy.forEach((x) => {
-                const equipmentDiv = document.createElement('div');
-                equipmentDiv.classList.add('eqp_to_sell');
-                const eqpNameElement = document.createElement('p');
-                eqpNameElement.innerText = `Name: ${x.itemName}`;
-                const eqpValueElement = document.createElement('p');
-                eqpValueElement.innerText = `Value: ${x.itemValue}`;
-                const buyEqpButton = document.createElement('button');
-                buyEqpButton.innerText = 'Buy equipment';
-                buyEqpButton.addEventListener('click', () => {
-                    const shopLog = s.buyEquipment(x, p);
-                    console.log(shopLog);
-                    this.renderScreen(p, e, s);
-                });
-                equipmentDiv.appendChild(eqpNameElement);
-                equipmentDiv.appendChild(eqpValueElement);
-                equipmentDiv.appendChild(buyEqpButton);
-                equipmentsToSellDiv.appendChild(equipmentDiv);
-            });
-            shopDiv.appendChild(equipmentsToSellDiv);
-        });
-        shopDiv.appendChild(oppenShopBtn);
-        //Append to appDiv
-        container.appendChild(shopDiv);
     }
     static generateBattleMessages(p, e, moment) {
         const msgDiv = document.getElementById('message_container');

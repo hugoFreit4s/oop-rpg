@@ -65,17 +65,6 @@ main {
     border-radius: 6px;
 }
 
-button {
-    padding: 10px;
-    width: 100px;
-    border-radius: 5px;
-}
-
-.shop_div {
-    display: flex;
-    margin-top: 10px;
-}
-
 .eqp_to_sell_div {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -84,4 +73,10 @@ button {
 .eqp_to_sell {
     padding: 8px;
     border: 1px solid black;
+}
+
+button {
+    padding: 10px;
+    width: 100px;
+    border-radius: 5px;
 }
