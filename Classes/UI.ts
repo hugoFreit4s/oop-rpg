@@ -1,19 +1,18 @@
 import Enemy from "./Enemy";
 import Player from "./Player";
 import Shop from "./Shop";
+const container = document.getElementById('app_container');
 
 export default class UI {
     static renderScreen(p: Player, e: Enemy, s: Shop) {
-        const container = document.getElementById('app_container');
         container!.innerHTML = '';
-        this.generateHTMLElements(p, e, s);
+        this.generateTopDivHTMLElements(p, e);
+        this.generateBattleHTMLElements(p, e);
+        this.generateInventoryHTMLElements(p, e, s);
     }
 
-    static generateHTMLElements(p: Player, e: Enemy, s: Shop) {
-        const container = document.getElementById('app_container');
-        //Life percentage calc
-        const playerLifePercentage = (p.entityHp / p.entityMaxHp) * 100;
-        const enemyLifePercentage = (e.entityHp / e.entityMaxHp) * 100;
+    static generateTopDivHTMLElements(p: Player, e: Enemy) {
+        //Exp percentage calc
         const levelPercentage = (p.playerExpAmount / p.playerRequiredExp) * 100;
 
         //Level and Gold div
@@ -26,14 +25,40 @@ export default class UI {
         goldAmountElement.innerText = `Gold: ${p.entityGoldAmount}`;
         goldDiv.appendChild(goldAmountElement);
 
-        //Stats div
-        const statsDiv = document.createElement('div');
-        const atkPwrElement = document.createElement('p');
-        atkPwrElement.innerText = `Attack power: ${p.entityAtkPwr}`;
-        const defPwrElement = document.createElement('p');
-        defPwrElement.innerText = `Defense power: ${p.entityDef}`;
-        statsDiv.appendChild(atkPwrElement);
-        statsDiv.appendChild(defPwrElement);
+        //Level div
+        const levelDiv = document.createElement('div');
+        levelDiv.classList.add('life_div');
+
+        const levelElement = document.createElement('p');
+        levelElement.innerText = `Level: ${p.playerLevel.toString()}`;
+
+        const experienceBar = document.createElement('div'); // Problemas aqui
+        experienceBar.classList.add('life_bar_div');
+        const levelBarBg = document.createElement('div');
+        levelBarBg.classList.add('life_bar_bg');
+        const currentLevelBar = document.createElement('div');
+        currentLevelBar.classList.add('life_div');
+        currentLevelBar.classList.add('bar');
+        currentLevelBar.style.width = `${levelPercentage}%`
+        console.log(`${e.xpLoot}`)
+        experienceBar.appendChild(levelBarBg);
+        experienceBar.appendChild(currentLevelBar);
+        levelDiv.appendChild(experienceBar);
+        levelDiv.appendChild(levelElement); //HELP😭
+        currentLevelBar.style.border = levelPercentage <= 0 ? '0px' : '1px solid black';
+
+        // topDiv.appendChild(levelElement);
+        topDiv.appendChild(levelDiv);
+        topDiv.appendChild(goldDiv);
+        // topDiv.appendChild(statsDiv);
+
+        container!.appendChild(topDiv);
+    }
+
+    static generateBattleHTMLElements(p: Player, e: Enemy) {
+        //Life percentage calc
+        const playerLifePercentage = (p.entityHp / p.entityMaxHp) * 100;
+        const enemyLifePercentage = (e.entityHp / e.entityMaxHp) * 100;
 
         //Messages div
         const msgDiv = document.createElement('div');
@@ -43,62 +68,54 @@ export default class UI {
         messageElement.id = 'message';
         msgDiv.appendChild(messageElement);
 
-        //Level div
-        const levelDiv = document.createElement('div');
-        levelDiv.classList.add('level_div');
-
-        const levelElement = document.createElement('p');
-        levelElement.innerText = `Level: ${p.playerLevel.toString()}`;
-
-        const experienceBar = document.createElement('div'); // Problemas aqui
-        experienceBar.classList.add('life_bar');
-        const levelBarBg = document.createElement('div');
-        levelBarBg.classList.add('bar_bg');
-        const currentLevelBar = document.createElement('div');
-        currentLevelBar.classList.add('current_life_lifebar');
-        currentLevelBar.classList.add('level_bar');
-        currentLevelBar.style.width = `${levelPercentage}%`
-        console.log(`${e.xpLoot}`)
-        experienceBar.appendChild(levelBarBg);
-        experienceBar.appendChild(currentLevelBar);
-        levelDiv.appendChild(experienceBar);
-        levelDiv.appendChild(levelElement); //HELP😭
-
-        topDiv.appendChild(levelDiv);
-        topDiv.appendChild(goldDiv);
-        topDiv.appendChild(statsDiv);
+        const lifebarDiv = document.createElement('div');
+        lifebarDiv.classList.add('life_bar_div');
 
         //Player lifebar
-        const playerLifebarDiv = document.createElement('div');
-        playerLifebarDiv.classList.add('life_bar');
+        const playerLifeDiv = document.createElement('div');
+        playerLifeDiv.classList.add('life_div');
         const playerNameElement = document.createElement('p');
         playerNameElement.innerText = p.entityName;
         const playerLifebarBg = document.createElement('div');
-        playerLifebarBg.classList.add('bar_bg');
+        playerLifebarBg.classList.add('life_bar_bg');
         const playerCurrentLifeDiv = document.createElement('div');
-        playerCurrentLifeDiv.classList.add('current_life_lifebar');
-        playerCurrentLifeDiv.classList.add('level_bar');
+        playerCurrentLifeDiv.classList.add('life_div');
+        playerCurrentLifeDiv.classList.add('bar');
         playerCurrentLifeDiv.style.width = `${playerLifePercentage}%`;
+        playerLifeDiv.appendChild(playerNameElement);
+        playerLifeDiv.appendChild(playerLifebarBg);
+        playerLifeDiv.appendChild(playerCurrentLifeDiv);
 
         //Enemy lifebar
-        const enemyLifebarDiv = document.createElement('div');
-        enemyLifebarDiv.style.marginTop = '20px';
-        enemyLifebarDiv.classList.add('life_bar');
+        const enemyLifeDiv = document.createElement('div');
+        enemyLifeDiv.classList.add('life_div');
         const enemyNameElement = document.createElement('p');
         enemyNameElement.innerText = e.entityName;
         const enemyLifebarBg = document.createElement('div');
-        enemyLifebarBg.classList.add('bar_bg');
+        enemyLifebarBg.classList.add('life_bar_bg');
         const enemyCurrentLifeDiv = document.createElement('div');
-        enemyCurrentLifeDiv.classList.add('current_life_lifebar');
-        enemyCurrentLifeDiv.classList.add('level_bar');
+        enemyCurrentLifeDiv.classList.add('life_div');
+        enemyCurrentLifeDiv.classList.add('bar');
         enemyCurrentLifeDiv.style.width = `${enemyLifePercentage}%`;
+        enemyLifeDiv.appendChild(enemyNameElement);
+        enemyLifeDiv.appendChild(enemyLifebarBg);
+        enemyLifeDiv.appendChild(enemyCurrentLifeDiv);
 
-        currentLevelBar.style.border = levelPercentage <= 0 ? '0px' : '1px solid black';
-        enemyCurrentLifeDiv.style.border = enemyLifePercentage <= 0 ? '0px' : '1px solid black';
         playerCurrentLifeDiv.style.border = playerLifePercentage <= 0 ? '0px' : '1px solid black';
+        enemyCurrentLifeDiv.style.border = enemyLifePercentage <= 0 ? '0px' : '1px solid black';
 
+        //Append to lifebarDiv
+        lifebarDiv.appendChild(playerLifeDiv);
+        lifebarDiv.appendChild(enemyLifeDiv);
+        //Append to main div
+        container!.appendChild(msgDiv);
+        container!.appendChild(lifebarDiv);
+    }
+
+    static generateInventoryHTMLElements(p: Player, e: Enemy, s: Shop) {
         //Equiped items
         const equipedItemsDiv = document.createElement('div');
+        equipedItemsDiv.classList.add('equiped_items_div');
         const equipedWeaponDiv = document.createElement('div');
         const equipedWeaponElement = document.createElement('p');
         equipedWeaponElement.innerText = p.playerWeapon === null ? "No weapons equiped!" : `Equiped weapon: ${p.playerWeapon.itemName}`;
@@ -201,6 +218,21 @@ export default class UI {
 
         inventoryDiv.appendChild(openInventoryBtn);
 
+        container!.appendChild(equipedItemsDiv);
+        container!.appendChild(inventoryDiv);
+    }
+
+    static generateHTMLElements(p: Player, e: Enemy, s: Shop) {
+
+        //Stats div
+        const statsDiv = document.createElement('div');
+        const atkPwrElement = document.createElement('p');
+        atkPwrElement.innerText = `Attack power: ${p.entityAtkPwr}`;
+        const defPwrElement = document.createElement('p');
+        defPwrElement.innerText = `Defense power: ${p.entityDef}`;
+        statsDiv.appendChild(atkPwrElement);
+        statsDiv.appendChild(defPwrElement);
+
         //Shop
         const shopDiv = document.createElement('div');
         shopDiv.classList.add('shop_div');
@@ -232,22 +264,7 @@ export default class UI {
         });
 
         shopDiv.appendChild(oppenShopBtn);
-
-        //Append to playerLifebarDiv
-        playerLifebarDiv.appendChild(playerNameElement);
-        playerLifebarDiv.appendChild(playerLifebarBg);
-        playerLifebarDiv.appendChild(playerCurrentLifeDiv);
-        //Append to enemyLifebarDiv
-        enemyLifebarDiv.appendChild(enemyNameElement);
-        enemyLifebarDiv.appendChild(enemyLifebarBg);
-        enemyLifebarDiv.appendChild(enemyCurrentLifeDiv);
         //Append to appDiv
-        container!.appendChild(topDiv);
-        container!.appendChild(msgDiv);
-        container!.appendChild(playerLifebarDiv);
-        container!.appendChild(enemyLifebarDiv);
-        container!.appendChild(equipedItemsDiv);
-        container!.appendChild(inventoryDiv);
         container!.appendChild(shopDiv);
     }
 
