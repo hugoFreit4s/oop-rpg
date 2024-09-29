@@ -1,3 +1,4 @@
+import StringBuilder from "./StringBuilder.js";
 export default class Helper {
     static calcDamage(atk, def) {
         const damage = (atk - def) < 0 ? 0 : atk - def;
@@ -7,7 +8,7 @@ export default class Helper {
         return `${character.entityHp} / ${character.entityMaxHp}`;
     }
     static transferLootToPlayer(enemy, enemyGoldLoot, player) {
-        player.addToInventory(enemy.loot);
+        player.addToInventory(...enemy.loot);
         player.increaseGoldAmount = enemyGoldLoot;
         enemy.decreaseGoldAmount = enemy.entityGoldAmount;
     }
@@ -23,5 +24,8 @@ export default class Helper {
             }
         }
         return result;
+    }
+    static getDamageMessage(dmg, entity) {
+        return new StringBuilder().setString(`Damage taken: ${dmg} --- ${entity.entityName} HP: ${entity.entityHp} / ${entity.entityMaxHp}`).build();
     }
 }

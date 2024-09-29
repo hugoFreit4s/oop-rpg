@@ -1,4 +1,9 @@
 import Item from "./Item.js";
+export var EquipmentCategory;
+(function (EquipmentCategory) {
+    EquipmentCategory[EquipmentCategory["WEAPON"] = 1] = "WEAPON";
+    EquipmentCategory[EquipmentCategory["ARMOR"] = 2] = "ARMOR";
+})(EquipmentCategory || (EquipmentCategory = {}));
 export default class Equipment extends Item {
     atk;
     def;

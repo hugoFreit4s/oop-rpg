@@ -11,7 +11,7 @@ export default class Shop {
             return 'Inventory is full!';
         }
         else {
-            buyer.addToInventory([eqp]);
+            buyer.addToInventory(eqp);
             const tempArr = [];
             this.equipmentsToBuy.map(x => {
                 if (x.id !== eqp.id)
