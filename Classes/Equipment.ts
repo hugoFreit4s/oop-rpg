@@ -1,13 +1,18 @@
 import Item from "./Item.js";
 
+export enum CategoryENUM {
+    WEAPON = 1,
+    ARMOR = 2
+}
+
 export default abstract class Equipment extends Item {
     atk: number;
     def: number;
     magic: number;
     level: number;
     id: string;
-    category: "Weapon" | "Armor";
-    constructor(name: string, atkPwr: number, defPwr: number, magicPwr: number, level: number, id: string, category: "Weapon" | "Armor", value: number) {
+    category: CategoryENUM;
+    constructor(name: string, atkPwr: number, defPwr: number, magicPwr: number, level: number, id: string, category: CategoryENUM, value: number) {
         super(name, value);
         this.atk = atkPwr;
         this.def = defPwr;

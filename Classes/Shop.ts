@@ -3,7 +3,7 @@ import Player from "./Player";
 
 export default class Shop {
     equipmentsToBuy: Array<Equipment>;
-    constructor(equipments: Array<Equipment>) {
+    constructor(...equipments: Array<Equipment>) {
         this.equipmentsToBuy = equipments;
     }
 
@@ -13,7 +13,7 @@ export default class Shop {
         } else if (buyer.playerInventory.length >= 10) {
             return 'Inventory is full!';
         } else {
-            buyer.addToInventory([eqp]);
+            buyer.addToInventory(eqp);
             const tempArr: Array<Equipment> = [];
             this.equipmentsToBuy.map(x => {
                 if (x.id !== eqp.id) tempArr.push(x);

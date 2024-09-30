@@ -1,4 +1,4 @@
-import StringBuilder from "./StringBuilder.js";
+import StringBuilder from "./Builders/StringBuilder.js";
 export default class Helper {
     static calcDamage(atk, def) {
         const damage = (atk - def) < 0 ? 0 : atk - def;
@@ -26,6 +26,6 @@ export default class Helper {
         return result;
     }
     static getDamageMessage(dmg, entity) {
-        return new StringBuilder().setString(`Damage taken: ${dmg} --- ${entity.entityName} HP: ${entity.entityHp} / ${entity.entityMaxHp}`).build();
+        return new StringBuilder().setString(`Damage: ${dmg} --- ${entity.entityName} HP: ${entity.entityHp} / ${entity.entityMaxHp}`).build();
     }
 }

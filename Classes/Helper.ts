@@ -1,6 +1,8 @@
-import Enemy from "./Enemy";
+import StringBuilder from "./Builders/StringBuilder.js";
+import Enemy from "./Enemy.js";
+import Entity from "./Entity.js";
 import Equipment from "./Equipment";
-import Player from "./Player";
+import Player from "./Player.js";
 
 export default class Helper {
     static calcDamage(atk: number, def: number) {
@@ -13,7 +15,7 @@ export default class Helper {
     }
 
     static transferLootToPlayer(enemy: Enemy, enemyGoldLoot: number, player: Player): void {
-        player.addToInventory(enemy.loot);
+        player.addToInventory(...enemy.loot);
         player.increaseGoldAmount = enemyGoldLoot;
         enemy.decreaseGoldAmount = enemy.entityGoldAmount;
     }
@@ -31,5 +33,9 @@ export default class Helper {
             }
         }
         return result;
+    }
+
+    static getDamageMessage(dmg: number, entity: Entity) {
+        return new StringBuilder().setString(`Damage: ${dmg} --- ${entity.entityName} HP: ${entity.entityHp} / ${entity.entityMaxHp}`).build();
     }
 }

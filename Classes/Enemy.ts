@@ -12,9 +12,8 @@ export default class Enemy extends Entity {
         this.eqpLoot = loot;
     }
 
-    getDmg(dmg: number): string {
+    getDmg(dmg: number): void {
         this.putHp = this.entityHp - dmg < 0 ? 0 : this.entityHp - dmg;
-        return `Damage given: ${dmg} --- ${this.entityName} HP: ${this.entityHp} / ${this.entityMaxHp}`;
     }
 
     get loot(): Array<Equipment> {

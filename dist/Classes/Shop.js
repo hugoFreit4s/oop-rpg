@@ -1,6 +1,6 @@
 export default class Shop {
     equipmentsToBuy;
-    constructor(equipments) {
+    constructor(...equipments) {
         this.equipmentsToBuy = equipments;
     }
     buyEquipment(eqp, buyer) {

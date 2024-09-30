@@ -5,24 +5,35 @@ import UI from "./Classes/UI.js";
 import Weapon from "./Classes/Weapon.js";
 import Armor from "./Classes/Armor.js";
 import Shop from "./Classes/Shop.js";
+import StringBuilder from "./Classes/Builders/StringBuilder.js";
+import { armorFactory, ArmorsENUM, weaponFactory, WeaponsENUM } from "./Classes/Factories/EquipmentFactory.js";
 
 let p: Player = new Player(30, 30, 5, 3, 'Eu');
-let e: Enemy = new Enemy(10, 10, 5, 2, 'Kashrt', 3, 'Orc', [new Weapon('WoodSword', 2, 0, 0, 1, crypto.randomUUID(), Helper.generateRandomIntNumber(5))], Helper.generateRandomIntNumber(10));
-const shop: Shop = new Shop([new Weapon('Gold Sword', 5, 2, 0, 1, '1', 35), new Weapon('Enchanted Sword', 3, 2, 7, 1, '2', 35), new Armor('Diamond Armor', 1, 20, 0, 1, '3', 120)]);
+let e: Enemy = new Enemy(10, 10, 5, 2, 'Kashrt', 3, 'Orc', [weaponFactory(WeaponsENUM.WOOD_SWORD)], Helper.generateRandomIntNumber(10));
+const shop: Shop = new Shop(weaponFactory(WeaponsENUM.WOOD_SWORD), weaponFactory(WeaponsENUM.IRON_SWORD),
+    weaponFactory(WeaponsENUM.GOLD_SWORD),
+    weaponFactory(WeaponsENUM.DIAMOND_SWORD),
+    armorFactory(ArmorsENUM.WOOD_ARMOR),
+    armorFactory(ArmorsENUM.IRON_ARMOR),
+    armorFactory(ArmorsENUM.GOLD_ARMOR),
+    armorFactory(ArmorsENUM.DIAMOND_ARMOR));
 const attackBtn = document.getElementById('atk_btn');
 
 UI.renderScreen(p, e, shop);
 UI.generateBattleMessages(p, e, 'start');
+let message = new StringBuilder();
 attackBtn?.addEventListener('click', () => {
     // executeTurn();
+    const dmgTaken = Helper.calcDamage(e.entityAtkPwr, p.entityDef);
+    const dmgGiven = Helper.calcDamage(p.entityAtkPwr, e.entityDef);
+    let string = new StringBuilder();
+    p.getDmg(dmgTaken);
+    e.getDmg(dmgGiven);
     if (p.entityHp > 0 && e.entityHp > 0) {
-        let string = '';
-        string += p.getDmg(Helper.calcDamage(e.entityAtkPwr, p.entityDef));
-        string += "\n" + e.getDmg(Helper.calcDamage(p.entityAtkPwr, e.entityDef));
         UI.renderScreen(p, e, shop);
-        UI.setBattleMessage(string);
+        message.setString(Helper.getDamageMessage(dmgTaken, e)).concatLn(Helper.getDamageMessage(dmgGiven, p));
     } else if (e.entityHp === 0) {
-        let message = `${e.entityName} defeated! DROP: ${e.xpLoot}XP, ${e.loot[0].itemName} AND ${e.entityGoldAmount} GOLD\nYour XP: ${p.playerExpAmount}`;
+        message.setString(`${e.entityName} defeated! DROP: ${e.xpLoot}XP, ${e.loot[0].itemName} AND ${e.entityGoldAmount} GOLD\nYour XP: ${p.playerExpAmount}`);
         const races = ['Orc', 'Troll', 'Human']; // To do
         // p.addToInventory(e.loot);
         Helper.transferLootToPlayer(e, e.entityGoldAmount, p);
@@ -35,15 +46,16 @@ attackBtn?.addEventListener('click', () => {
         const randomXpLoot = Helper.generateRandomIntNumber(5);
         const randomGoldAmount = Helper.generateRandomIntNumber(10);
 
-        e = new Enemy(randomMaxHP, hp, randomStrength, randomDef, randomName, randomXpLoot, 'Orc', [new Armor('Steel Armor', 0, 3, 0, 1, crypto.randomUUID(), Helper.generateRandomIntNumber(5))], randomGoldAmount);
+        e = new Enemy(randomMaxHP, hp, randomStrength, randomDef, randomName, randomXpLoot, 'Orc', [armorFactory(ArmorsENUM.WOOD_ARMOR)], randomGoldAmount);
         p.increasePlayerExpAmount(e.xpLoot);
-        message += `\nNew enemy: ${e.entityName} --- HP: ${e.entityHp} / ${e.entityMaxHp}`
+        message.concatLn(`New enemy: ${e.entityName} --- HP: ${e.entityHp} / ${e.entityMaxHp}`);
         UI.renderScreen(p, e, shop);
-        UI.setBattleMessage(message);
+        // UI.setBattleMessage(message);
     } else if (p.entityHp === 0) {
         UI.renderScreen(p, e, shop);
-        UI.setBattleMessage(`DEFEATED! HP: ${p.entityHp} / ${p.entityMaxHp}`);
+        message.setString(`DEFEATED! HP: ${p.entityHp} / ${p.entityMaxHp}`);
     }
+    UI.setBattleMessage(message.build());
 });
 
 

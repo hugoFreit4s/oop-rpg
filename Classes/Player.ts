@@ -1,6 +1,6 @@
 import Armor from "./Armor.js";
 import Entity from "./Entity.js";
-import Equipment from './Equipment.js';
+import Equipment, { CategoryENUM } from './Equipment.js';
 import Helper from "./Helper.js";
 import Item from "./Item.js";
 import Weapon from "./Weapon.js";
@@ -53,9 +53,8 @@ export default class Player extends Entity {
         return reqExp;
     }
 
-    getDmg(dmg: number): string {
+    getDmg(dmg: number): void {
         this.putHp = this.entityHp - dmg < 0 ? 0 : this.entityHp - dmg;
-        return `Damage taken: ${dmg} --- ${this.entityName} HP: ${this.entityHp} / ${this.entityMaxHp}`;
     }
 
     increasePlayerExpAmount(expToAdd: number) {
@@ -78,7 +77,7 @@ export default class Player extends Entity {
         if (this.expAmount >= this.requiredExp) this.upLevel();
     }
 
-    addToInventory(loot: Array<Equipment>): void {
+    addToInventory(...loot: Array<Equipment>): void {
         // console.log(loot);
         if (this.itemInventory.length >= 10) {
             console.log(`Invetory full, no items collected!`);
@@ -103,7 +102,7 @@ export default class Player extends Entity {
 
     equipItem(equipment: Equipment): void {
         const provisoryArr: Array<Equipment> = [];
-        if (equipment.category === 'Weapon') {
+        if (equipment.category === CategoryENUM.WEAPON) {
             if (this.equipedWeapon !== null) {
                 this.itemInventory.map((x) => {
                     if (equipment.id !== x.id) provisoryArr.push(x);
@@ -147,7 +146,7 @@ export default class Player extends Entity {
 
     unequipItem(equipment: Equipment) {
         switch (equipment.category) {
-            case 'Weapon':
+            case CategoryENUM.WEAPON:
                 if (this.itemInventory.length >= 10) {
                     console.log('No room to unequip. Inventory full!');
                 } else if (equipment.id !== this.equipedWeapon?.id) {
@@ -161,7 +160,7 @@ export default class Player extends Entity {
                     }
                 }
                 break;
-            case 'Armor':
+            case CategoryENUM.ARMOR:
                 if (this.itemInventory.length >= 10) {
                     console.log('No room to unequip. Inventory full!');
                 } else if (equipment.id !== this.equipedArmor?.id) {
