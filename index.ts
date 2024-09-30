@@ -8,7 +8,7 @@ import Shop from "./Classes/Shop.js";
 import StringBuilder from "./Classes/Builders/StringBuilder.js";
 import { armorFactory, ArmorsENUM, weaponFactory, WeaponsENUM } from "./Classes/Factories/EquipmentFactory.js";
 
-let p: Player = new Player(30, 30, 5, 3, 'Eu');
+let p: Player = new Player(20, 20, 5, 3, 'Eu');
 let e: Enemy = new Enemy(10, 10, 5, 2, 'Kashrt', 3, 'Orc', [weaponFactory(WeaponsENUM.WOOD_SWORD)], Helper.generateRandomIntNumber(10));
 const shop: Shop = new Shop(weaponFactory(WeaponsENUM.WOOD_SWORD), weaponFactory(WeaponsENUM.IRON_SWORD),
     weaponFactory(WeaponsENUM.GOLD_SWORD),
@@ -20,7 +20,7 @@ const shop: Shop = new Shop(weaponFactory(WeaponsENUM.WOOD_SWORD), weaponFactory
 const attackBtn = document.getElementById('atk_btn');
 
 UI.renderScreen(p, e, shop);
-UI.generateBattleMessages(p, e, 'start');
+UI.renderBattleMessage(new StringBuilder().setString(`Your HP: ${p.entityHp} / ${p.entityMaxHp}`).concatLn(`Enemy: ${e.entityName}`).concatLn(`Enemy life: ${e.entityHp} / ${e.entityMaxHp}`).build());
 let message = new StringBuilder();
 attackBtn?.addEventListener('click', () => {
     // executeTurn();
@@ -55,7 +55,7 @@ attackBtn?.addEventListener('click', () => {
         UI.renderScreen(p, e, shop);
         message.setString(`DEFEATED! HP: ${p.entityHp} / ${p.entityMaxHp}`);
     }
-    UI.setBattleMessage(message.build());
+    UI.renderBattleMessage(message.build());
 });
 
 

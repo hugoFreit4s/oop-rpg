@@ -3,80 +3,64 @@ main {
     flex-direction: column;
 }
 
-.top_div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 60px;
-}
-
-.msg_div {
-    display: flex;
-    justify-content: center;
-    height: 100px;
-}
-
-.life_bar_div {
-    display: flex;
-    justify-content: space-around;
-}
-
-.life_div {
-    width: 200px;
-    height: 4px;
-}
-
-.life_bar_bg {
-    position: absolute;
-    height: 4px;
-    width: 200px;
+.bar-fill {
+    background-color: green;
+    padding: 5px;
+    border-radius: 8px;
     border: 1px solid black;
-    border-radius: 6px;
 }
 
-.bar {
-    background-color: #00FF00;
-    border-radius: 6px;
-}
-
-.equiped_items_div {
+.bar-background {
     display: flex;
-    flex-direction: column;
-    margin-top: 120px;
-    margin-bottom: 60px;
+    background-color: rgba(128, 128, 128, 0.268);
+    width: 100px;
+    border-radius: 8px;
 }
 
-.inventory_div {
-    margin-top: 20px;
-    height: 120px;
+.bars-container {
     display: flex;
-    flex-direction: column;
-}
-
-.openned_inv_div {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    margin-top: 5px;
 }
 
-.item_div {
-    border: 1px solid rgba(128, 128, 128, 0.397);
-    border-radius: 6px;
-}
-
-.eqp_to_sell_div {
+.all-items-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
 }
 
-.eqp_to_sell {
-    padding: 8px;
-    border: 1px solid black;
-}
-
-button {
-    padding: 10px;
-    width: 100px;
+.item-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgba(128, 128, 128, 0.349);
     border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+}
+
+.inventory-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.items-stats {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(128, 128, 128, 0.349);
+    border: 1px solid rgba(128, 128, 128, 0.672);
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.inventory-buttons {
+    padding: 5px 25px 5px 25px;
+    border: 1px solid rgba(128, 128, 128, 0.672);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.inventory-buttons:hover {
+    box-shadow: 2px 2px 80px black;
 }
