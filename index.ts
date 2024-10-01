@@ -2,8 +2,6 @@ import Enemy from "./Classes/Enemy.js";
 import Player from "./Classes/Player.js";
 import Helper from "./Classes/Helper.js";
 import UI from "./Classes/UI.js";
-import Weapon from "./Classes/Weapon.js";
-import Armor from "./Classes/Armor.js";
 import Shop from "./Classes/Shop.js";
 import StringBuilder from "./Classes/Builders/StringBuilder.js";
 import { armorFactory, ArmorsENUM, weaponFactory, WeaponsENUM } from "./Classes/Factories/EquipmentFactory.js";

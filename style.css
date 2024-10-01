@@ -31,11 +31,9 @@ main {
 .item-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     border: 1px solid rgba(128, 128, 128, 0.349);
     border-radius: 5px;
     padding: 10px;
-    text-align: center;
 }
 
 .inventory-container {
@@ -59,8 +57,48 @@ main {
     border: 1px solid rgba(128, 128, 128, 0.672);
     border-radius: 4px;
     cursor: pointer;
+    transition: box-shadow 0.5s;
 }
 
 .inventory-buttons:hover {
     box-shadow: 2px 2px 80px black;
+}
+
+.open-buttons {
+    width: 200px;
+    padding: 5px 25px 5px 25px;
+    border: 1px solid rgba(128, 128, 128, 0.672);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.shop-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-items-container {
+    margin: 10px 0 10px 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.eqp-to-sell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid rgba(128, 128, 128, 0.349);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.equipment-stats {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(128, 128, 128, 0.672);
+    border-radius: 4px;
+    padding: 10px 10px 10px 10px;
+    width: 70%;
 }

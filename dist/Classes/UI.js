@@ -7,6 +7,7 @@ export default class UI {
         this.renderBars(p, e);
         this.renderMessageContainer();
         this.renderInventory(p, e, s);
+        this.createShopModal(p, e, s);
     }
     static renderBars(p, e) {
         const playerPercentage = (p.entityHp / p.entityMaxHp) * 100;
@@ -24,7 +25,7 @@ export default class UI {
         msgContainer?.appendChild(new HTMLBuilder('p').addText(textContent).build());
     }
     static renderInventory(p, e, s) {
-        const openInventoryBtn = new HTMLBuilder('button').addText('Open Inventory').addStyles('padding: 5px 25px 5px 25px; border: 1px solid rgba(128, 128, 128, 0.672); border-radius: 4px; cursor: pointer;').build();
+        const openInventoryBtn = new HTMLBuilder('button').addText('Open Inventory').addClass('open-buttons').build();
         const allItemsContainer = new HTMLBuilder('div').addClass('all-items-container').build();
         const inventoryContainer = new HTMLBuilder('div').addClass('inventory-container').addChildren(openInventoryBtn, allItemsContainer).build();
         let inventoryOpenned = false;
@@ -45,6 +46,8 @@ export default class UI {
                         const equipButton = new HTMLBuilder('button').addText('Equip item!').addClass('inventory-buttons').build();
                         equipButton.addEventListener('click', () => {
                             p.equipItem(x);
+                            inventoryContainer.innerHTML = '';
+                            this.renderInventory(p, e, s);
                         });
                         const sellButton = new HTMLBuilder('button').addText('Sell item!').addClass('inventory-buttons').build();
                         sellButton.addEventListener('click', () => {
@@ -67,5 +70,40 @@ export default class UI {
             }
         });
         container?.appendChild(inventoryContainer);
+    }
+    static createShopModal(p, e, s) {
+        const openShopBtn = new HTMLBuilder('button').addText('Open shop').addClass('open-buttons').build();
+        const shopContainer = new HTMLBuilder('div').addClass('shop-container').addChildren(openShopBtn).build();
+        const shopItemsContainer = new HTMLBuilder('div').addClass('shop-items-container').build();
+        openShopBtn.addEventListener('click', () => {
+            openShopBtn.innerText = 'Close shop';
+            openShopBtn.addEventListener('click', () => {
+                shopContainer.innerHTML = '';
+                this.renderScreen(p, e, s);
+            });
+            if (s.equipmentsToBuy.length <= 0) {
+                shopItemsContainer.innerText = 'No items to sell';
+            }
+            else {
+                s.equipmentsToBuy.forEach(x => {
+                    const equipmentName = new HTMLBuilder('p').addText(x.itemName).addStyles('font-weight:700;').build();
+                    const equipmentAtk = new HTMLBuilder('p').addText(`Attack power: ${x.eqpAtk.toString()}`).build();
+                    const equipmentDef = new HTMLBuilder('p').addText(`Defense power: ${x.eqpDef.toString()}`).build();
+                    const equipmentValue = new HTMLBuilder('p').addText(`Value: ${x.itemValue.toLocaleString("en-US", { style: "currency", currency: "USD" })}`).addStyles('font-weight:700; padding: 10px 10px 10px 10px; background-color: rgba(128, 128, 128, 0.672); border-radius: 6px').build();
+                    const equipmentStats = new HTMLBuilder('div').addChildren(equipmentAtk, equipmentDef).addClass('equipment-stats').build();
+                    const buyButton = new HTMLBuilder('button').addText('Buy item!').addClass('inventory-buttons').build();
+                    const eqpDiv = new HTMLBuilder('div').addClass('eqp-to-sell').addChildren(equipmentName, equipmentStats, equipmentValue, buyButton).build();
+                    shopItemsContainer.appendChild(eqpDiv);
+                    buyButton.addEventListener('click', () => {
+                        s.buyEquipment(x, p);
+                        this.renderScreen(p, e, s);
+                        // this.createShopModal(p, e, s);
+                        // this.renderInventory(p, e, s);
+                    });
+                });
+                shopContainer.appendChild(shopItemsContainer);
+            }
+        });
+        container?.appendChild(shopContainer);
     }
 }
