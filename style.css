@@ -3,6 +3,17 @@ main {
     flex-direction: column;
 }
 
+.top-container {
+    display: flex;
+    justify-content: space-around;
+    max-height: 10px;
+}
+
+.bars-container {
+    display: flex;
+    gap: 20px;
+}
+
 .bar-fill {
     background-color: green;
     padding: 5px;
@@ -15,11 +26,6 @@ main {
     background-color: rgba(128, 128, 128, 0.268);
     width: 100px;
     border-radius: 8px;
-}
-
-.bars-container {
-    display: flex;
-    gap: 20px;
 }
 
 .all-items-container {

@@ -9,21 +9,24 @@ const container = document.getElementById('app_container');
 export default class UI {
     static renderScreen(p: Player, e: Enemy, s: Shop) {
         container!.innerHTML = '';
-        this.renderBars(p, e);
+        this.renderBarsAndGold(p, e);
         this.renderMessageContainer();
         this.renderInventory(p, e, s);
         this.createShopModal(p, e, s);
     }
 
-    static renderBars(p: Player, e: Enemy) {
+    static renderBarsAndGold(p: Player, e: Enemy) {
         const playerPercentage = (p.entityHp / p.entityMaxHp) * 100;
         const enemyPercentage = (e.entityHp / e.entityMaxHp) * 100;
 
         const playerBar = new Bar().setWidth(playerPercentage).getBar();
         const enemyBar = new Bar().setWidth(enemyPercentage).getBar();
-
         const barsDiv = new HTMLBuilder('div').addClass('bars-container').addChildren(playerBar, enemyBar).build();
-        container?.appendChild(barsDiv);
+
+        const goldDiv = new HTMLBuilder('div').addText(p.entityGoldAmount.toLocaleString("en-US", { style: "currency", currency: "USD" })).build();
+
+        const topContainer = new HTMLBuilder('div').addClass('top-container').addChildren(barsDiv, goldDiv).build();
+        container?.appendChild(topContainer);
     }
 
     static renderMessageContainer(): void {
