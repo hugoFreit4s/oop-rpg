@@ -7,6 +7,7 @@ main {
     display: flex;
     justify-content: space-around;
     max-height: 10px;
+    margin-bottom: 20px;
 }
 
 .bars-container {
@@ -16,7 +17,7 @@ main {
 
 .bar-fill {
     background-color: green;
-    padding: 5px;
+    padding: 3px;
     border-radius: 8px;
     border: 1px solid black;
 }
@@ -26,6 +27,7 @@ main {
     background-color: rgba(128, 128, 128, 0.268);
     width: 100px;
     border-radius: 8px;
+    border: 1px solid black;
 }
 
 .all-items-container {

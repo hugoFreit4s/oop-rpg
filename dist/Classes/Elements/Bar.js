@@ -10,6 +10,10 @@ export default class Bar {
         this.barFill.style.width = `${value}%`;
         return this;
     }
+    setBarColor(color) {
+        this.barFill.style.backgroundColor = color;
+        return this;
+    }
     getBar() {
         return this.bar;
     }

@@ -13,6 +13,11 @@ export default class Bar {
         return this;
     }
 
+    setBarColor(color: string) {
+        this.barFill.style.backgroundColor = color;
+        return this;
+    }
+
     getBar(): HTMLElement {
         return this.bar;
     }
