@@ -24,7 +24,6 @@ attackBtn?.addEventListener('click', () => {
     // executeTurn();
     const dmgTaken = Helper.calcDamage(e.entityAtkPwr, p.entityDef);
     const dmgGiven = Helper.calcDamage(p.entityAtkPwr, e.entityDef);
-    let string = new StringBuilder();
     p.getDmg(dmgTaken);
     e.getDmg(dmgGiven);
     if (p.entityHp > 0 && e.entityHp > 0) {

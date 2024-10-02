@@ -1,6 +1,19 @@
+body {
+    margin: 0;
+}
+
 main {
+    height: 100vh;
+}
+
+.open-btn {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    width: 200px;
+    padding: 5px 25px 5px 25px;
+    border: 1px solid rgba(128, 128, 128, 0.672);
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .top-container {
@@ -30,83 +43,39 @@ main {
     border: 1px solid black;
 }
 
-.all-items-container {
+.modal-backdrop {
+    top: 0;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.261);
+    backdrop-filter: blur(3px);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    display: none;
+}
+
+.modal-content {
+    padding: 20px 20px 20px 20px;
+    gap: 30px;
+    height: 600px;
+    width: 800px;
+    background-color: white;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
+    overflow: scroll;
 }
 
 .item-container {
     display: flex;
+    text-align: left;
+    line-height: 0;
     flex-direction: column;
-    border: 1px solid rgba(128, 128, 128, 0.349);
-    border-radius: 5px;
-    padding: 10px;
-}
-
-.inventory-container {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-.items-stats {
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(128, 128, 128, 0.349);
-    border: 1px solid rgba(128, 128, 128, 0.672);
-    border-radius: 5px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-.inventory-buttons {
-    padding: 5px 25px 5px 25px;
-    border: 1px solid rgba(128, 128, 128, 0.672);
+    border: 1px solid black;
     border-radius: 4px;
-    cursor: pointer;
-    transition: box-shadow 0.5s;
-}
-
-.inventory-buttons:hover {
-    box-shadow: 2px 2px 80px black;
-}
-
-.open-buttons {
-    width: 200px;
-    padding: 5px 25px 5px 25px;
-    border: 1px solid rgba(128, 128, 128, 0.672);
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.shop-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.shop-items-container {
-    margin: 10px 0 10px 0;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-}
-
-.eqp-to-sell {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    border: 1px solid rgba(128, 128, 128, 0.349);
-    border-radius: 5px;
-    padding: 10px;
-}
-
-.equipment-stats {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgba(128, 128, 128, 0.672);
-    border-radius: 4px;
-    padding: 10px 10px 10px 10px;
-    width: 70%;
+    padding: 20px 20px 20px 20px;
+    max-height: fit-content;
 }
