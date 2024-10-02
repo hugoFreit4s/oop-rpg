@@ -31,7 +31,27 @@ export default class UI {
     static renderInventory(p, e, s) {
         const openBtn = new HTMLBuilder('button').addText('Open Inventory').addClass('open-btn').build();
         const closeBtn = new HTMLBuilder('button').addText('X').addClass('open-btn').addStyles('width: 40px;').build();
+        const searchInp = new HTMLBuilder('input').build();
         const insideModalDiv = new HTMLBuilder('div').addClass('modal-content').build();
+        searchInp.addEventListener('input', () => {
+            insideModalDiv.innerHTML = '';
+            p.playerInventory.forEach(x => {
+                if (x.itemName.toLowerCase().includes(searchInp.value.toLowerCase())) {
+                    const itemName = new HTMLBuilder('p').addText(x.itemName).addStyles('font-weight: 700;').build();
+                    const itemAtk = new HTMLBuilder('p').addText(`Attack: ${x.atk.toString()}`).build();
+                    const itemDef = new HTMLBuilder('p').addText(`Defense: ${x.def.toString()}`).build();
+                    const itemVal = new HTMLBuilder('p').addText(`Value: ${x.itemValue.toLocaleString()}`).build();
+                    const eqpBtn = new HTMLBuilder('button').addText(`Equip ${x.itemName}`).build();
+                    eqpBtn.addEventListener('click', () => {
+                        p.equipItem(x);
+                        this.renderScreen(p, e, s);
+                    });
+                    const itemDiv = new HTMLBuilder('div').addChildren(itemName, itemAtk, itemDef, itemVal, eqpBtn).addClass('item-container').build();
+                    console.log(itemDiv);
+                    insideModalDiv.appendChild(itemDiv);
+                }
+            });
+        });
         p.playerInventory.forEach(x => {
             const itemName = new HTMLBuilder('p').addText(x.itemName).addStyles('font-weight: 700;').build();
             const itemAtk = new HTMLBuilder('p').addText(`Attack: ${x.atk.toString()}`).build();
@@ -46,7 +66,7 @@ export default class UI {
             console.log(itemDiv);
             insideModalDiv.appendChild(itemDiv);
         });
-        const outsideModalDiv = new HTMLBuilder('div').addChildren(closeBtn, insideModalDiv).addClass('modal-backdrop').build();
+        const outsideModalDiv = new HTMLBuilder('div').addChildren(closeBtn, searchInp, insideModalDiv).addClass('modal-backdrop').build();
         openBtn.addEventListener('click', () => {
             outsideModalDiv.style.display = "flex";
         });
