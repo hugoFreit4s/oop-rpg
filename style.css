@@ -6,32 +6,61 @@ main {
     height: 100vh;
 }
 
+#app_container {
+    padding: 0 100px 0 100px;
+}
+
 .open-btn {
     display: flex;
     justify-content: center;
-    width: 200px;
-    padding: 5px 25px 5px 25px;
+    padding: 7px 35px 7px 35px;
     border: 1px solid rgba(128, 128, 128, 0.672);
+    background-color: rgba(0, 0, 0, 0.078);
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.5s, padding 1.3s;
+}
+
+.open-btn:hover {
+    background-color: rgba(0, 0, 0, 0.285);
+    padding: 7px 45px 7px 45px;
 }
 
 .top-container {
-    height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     margin-bottom: 20px;
+    padding: 5px 0 5px 0;
 }
 
 .bars-container {
+    padding: 30px 0 30px 0;
     display: flex;
-    height: 10px;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
-.exp-bar-container {
-    height: 10px;    
+.exp-container {
+    background-color: rgba(128, 128, 128, 0.268);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 10px 20px 10px 20px;
+    width: fit-content;
+    align-self: center;
+    transition: background-color 1s, padding 1.3s, margin-bottom 1.3s;
+}
+
+.exp-container:hover {
+    padding: 20px 40px 20px 40px;
+    margin-bottom: -20px;
+}
+
+.exp-container:hover {
+    background-color: rgba(128, 128, 128, 0.826);
 }
 
 .bar-fill {
@@ -50,32 +79,48 @@ main {
 }
 
 .battle-message-container {
-    height: 200px;
+    padding: 40px 0 40px 0;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.battle-txt-container {
+    padding: 20px 20px 20px 20px;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.modal-top{
+    width: 810px;
+    display: flex;
+    justify-content: space-between;
+}
+
 .modal-backdrop {
     top: 0;
+    left: 0;
     position: fixed;
     background-color: rgba(0, 0, 0, 0.261);
     backdrop-filter: blur(3px);
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: 100%;
-    display: none;
+    padding: 20px 20px 20px 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s;
 }
 
 .modal-content {
-    padding: 20px 20px 20px 20px;
-    gap: 30px;
+    width: 850px;
     height: 600px;
-    width: 800px;
+    padding: 35px 20px 35px 20px;
+    gap: 30px;
     background-color: white;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -91,4 +136,16 @@ main {
     border-radius: 4px;
     padding: 20px 20px 20px 20px;
     max-height: fit-content;
+}
+
+input{
+    background-color: #FFFF;
+    border: 1px solid black;
+    border-radius: 3px;
+    transition: background-color 1s;
+}
+
+input:focus{
+    background-color: rgba(0, 0, 0, 0.478);
+    color: #ffffff;
 }

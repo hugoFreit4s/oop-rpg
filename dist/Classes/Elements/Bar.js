@@ -14,7 +14,12 @@ export default class Bar {
         this.barFill.style.backgroundColor = color;
         return this;
     }
-    getBar() {
+    addClass(classname) {
+        this.barFill.classList.add(classname);
+        this.bar.classList.add(classname);
+        return this;
+    }
+    buildBar() {
         return this.bar;
     }
 }
