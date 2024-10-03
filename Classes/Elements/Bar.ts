@@ -24,6 +24,11 @@ export default class Bar {
         return this
     }
 
+    setBorderStyle(borderStyle: string): Bar {
+        this.barFill.style.border = borderStyle
+        return this;
+    }
+
     buildBar(): HTMLElement {
         return this.bar;
     }

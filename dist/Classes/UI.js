@@ -7,13 +7,14 @@ export default class UI {
         this.renderMessageContainer();
         this.renderBarsAndGold(p, e);
         this.renderInventory(p, e, s);
-        this.createShopModal(p, e, s);
+        this.renderShop(p, e, s);
     }
     static renderBarsAndGold(p, e) {
         const playerPercentage = (p.entityHp / p.entityMaxHp) * 100;
         const expPercentage = (p.playerExpAmount / p.entityMaxHp) * 100;
         const enemyPercentage = (e.entityHp / e.entityMaxHp) * 100;
-        const expBar = new Bar().setWidth(expPercentage).setBarColor('blue').buildBar();
+        const barBorder = expPercentage <= 0 ? 'none' : '1px solid black';
+        const expBar = new Bar().setWidth(expPercentage).setBarColor('blue').setBorderStyle(barBorder).buildBar();
         const playerBar = new Bar().setWidth(playerPercentage).buildBar();
         const pLifeText = new HTMLBuilder('p').addText(`${p.entityName} life: ${p.entityHp} / ${p.entityMaxHp}`).build();
         const playerBarDiv = new HTMLBuilder('div').addChildren(pLifeText, playerBar).build();
@@ -89,6 +90,69 @@ export default class UI {
         const invContainer = new HTMLBuilder('div').addChildren(openBtn, outsideModalDiv).addClass('inv-container').build();
         container?.appendChild(invContainer);
     }
-    static createShopModal(p, e, s) {
+    static renderShop(p, e, s) {
+        const openBtn = new HTMLBuilder('button').addText('Open Shop').addClass('open-btn').build();
+        const closeBtn = new HTMLBuilder('button').addText('X').addClass('open-btn').addStyles('width: 40px;').build();
+        const searchInp = new HTMLBuilder('input').build();
+        const topDivModal = new HTMLBuilder('div').addClass('modal-top').addChildren(searchInp, closeBtn).build();
+        const insideModalDiv = new HTMLBuilder('div').addClass('modal-content').build();
+        searchInp.addEventListener('input', () => {
+            insideModalDiv.innerHTML = '';
+            s.equipmentsToBuy.forEach(x => {
+                if (x.itemName.toLowerCase().includes(searchInp.value.toLowerCase())) {
+                    const itemName = new HTMLBuilder('p').addText(x.itemName).addStyles('font-weight: 700;').build();
+                    const itemAtk = new HTMLBuilder('p').addText(`Attack: ${x.atk.toString()}`).build();
+                    const itemDef = new HTMLBuilder('p').addText(`Defense: ${x.def.toString()}`).build();
+                    const itemVal = new HTMLBuilder('p').addText(`Value: ${x.itemValue.toLocaleString()}`).addStyles('font-weight: 700;').build();
+                    const eqpBtn = new HTMLBuilder('button').addText(`Equip ${x.itemName}`).build();
+                    eqpBtn.addEventListener('click', () => {
+                        p.equipItem(x);
+                        this.renderScreen(p, e, s);
+                    });
+                    const itemDiv = new HTMLBuilder('div').addChildren(itemName, itemAtk, itemDef, itemVal, eqpBtn).addClass('item-container').build();
+                    insideModalDiv.appendChild(itemDiv);
+                }
+            });
+        });
+        s.equipmentsToBuy.forEach(x => {
+            const itemName = new HTMLBuilder('p').addText(x.itemName).addStyles('font-weight: 700;').build();
+            const itemAtk = new HTMLBuilder('p').addText(`Attack: ${x.atk.toString()}`).build();
+            const itemDef = new HTMLBuilder('p').addText(`Defense: ${x.def.toString()}`).build();
+            const itemVal = new HTMLBuilder('p').addText(`Value: ${x.itemValue.toLocaleString()}`).addStyles('font-weight: 700;').build();
+            const eqpBtn = new HTMLBuilder('button').addText(`Buy ${x.itemName}`).build();
+            const goldMsgDiv = new HTMLBuilder('div').addClass('gold-msg-div').addStyles('display: flex; line-height: 20px;').build();
+            eqpBtn.addEventListener('click', () => {
+                if (x.itemValue > p.entityGoldAmount) {
+                    goldMsgDiv.innerHTML = '';
+                    const insuficientGoldMsg = new HTMLBuilder('p').addText("You don't have enough gold!").addStyles('color: red;').build();
+                    goldMsgDiv.appendChild(insuficientGoldMsg);
+                }
+                else {
+                    s.buyEquipment(x, p);
+                    this.renderScreen(p, e, s);
+                }
+            });
+            const itemDiv = new HTMLBuilder('div').addChildren(itemName, itemAtk, itemDef, itemVal, eqpBtn, goldMsgDiv).addClass('item-container').build();
+            console.log(itemDiv);
+            insideModalDiv.appendChild(itemDiv);
+        });
+        const outsideModalDiv = new HTMLBuilder('div').addChildren(topDivModal, insideModalDiv).addClass('modal-backdrop').build();
+        openBtn.addEventListener('click', () => {
+            searchInp.value = '';
+            // outsideModalDiv.style.display = "flex";
+            outsideModalDiv.style.opacity = '1';
+            outsideModalDiv.style.pointerEvents = 'initial';
+        });
+        closeBtn.addEventListener('click', () => {
+            outsideModalDiv.style.opacity = "0";
+            outsideModalDiv.style.pointerEvents = 'none';
+            const goldMsgDivs = document.getElementsByClassName('gold-msg-div');
+            for (let i = 0; i < goldMsgDivs.length; i++) {
+                if (goldMsgDivs[i] !== null)
+                    goldMsgDivs[i].innerHTML = '';
+            }
+        });
+        const shopContainer = new HTMLBuilder('div').addChildren(openBtn, outsideModalDiv).addClass('shop-container').build();
+        container?.appendChild(shopContainer);
     }
 }

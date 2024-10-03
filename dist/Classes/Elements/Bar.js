@@ -19,6 +19,10 @@ export default class Bar {
         this.bar.classList.add(classname);
         return this;
     }
+    setBorderStyle(borderStyle) {
+        this.barFill.style.border = borderStyle;
+        return this;
+    }
     buildBar() {
         return this.bar;
     }
