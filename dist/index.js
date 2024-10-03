@@ -24,8 +24,7 @@ attackBtn?.addEventListener('click', () => {
     }
     else if (e.entityHp === 0) {
         message.setString(`${e.entityName} defeated! DROP: ${e.xpLoot}XP, ${e.loot[0].itemName} AND ${e.entityGoldAmount} GOLD\nYour XP: ${p.playerExpAmount}`);
-        const races = ['Orc', 'Troll', 'Human']; // To do
-        // p.addToInventory(e.loot);
+        const races = ['Orc', 'Troll', 'Human'];
         Helper.transferLootToPlayer(e, e.entityGoldAmount, p);
         const randomMaxHP = Helper.generateRandomIntNumber(10);
         const hp = randomMaxHP;

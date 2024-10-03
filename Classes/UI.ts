@@ -24,11 +24,12 @@ export default class UI {
         const playerBar = new Bar().setWidth(playerPercentage).getBar();
         const expBar = new Bar().setWidth(expPercentage).setBarColor('blue').getBar();
         const enemyBar = new Bar().setWidth(enemyPercentage).getBar();
-        const barsDiv = new HTMLBuilder('div').addClass('bars-container').addChildren(playerBar, enemyBar).build();
+        const lifeBarsDiv = new HTMLBuilder('div').addClass('bars-container').addChildren(playerBar, enemyBar).build();
+        const expBarDiv = new HTMLBuilder('div').addClass('exp-bar-container').addChildren(expBar).build();
 
         const goldDiv = new HTMLBuilder('div').addText(p.entityGoldAmount.toLocaleString("en-US", { style: "currency", currency: "USD" })).build();
 
-        const topContainer = new HTMLBuilder('div').addClass('top-container').addChildren(barsDiv, expBar, goldDiv).build();
+        const topContainer = new HTMLBuilder('div').addClass('top-container').addChildren(lifeBarsDiv, expBarDiv, goldDiv).build();
         container?.appendChild(topContainer);
     }
 
